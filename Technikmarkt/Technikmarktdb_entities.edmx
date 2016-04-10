@@ -1,0 +1,668 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TechnikmarktModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="a_anbieter">
+          <Key>
+            <PropertyRef Name="a_anbietername" />
+          </Key>
+          <Property Name="a_anbietername" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="a_anbieterwebseite" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="an_anbieterfiliale">
+          <Key>
+            <PropertyRef Name="an_a_anbietername" />
+            <PropertyRef Name="a_v_adresse" />
+          </Key>
+          <Property Name="an_a_anbietername" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="a_v_adresse" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="c_computer">
+          <Key>
+            <PropertyRef Name="c_p_gtin" />
+          </Key>
+          <Property Name="c_prozessor" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="c_graphikkarte" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="c_p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="g_geschaeft">
+          <Key>
+            <PropertyRef Name="g_v_adresse" />
+            <PropertyRef Name="g_h_haendlername" />
+          </Key>
+          <Property Name="g_v_adresse" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="g_h_haendlername" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="h_haendler">
+          <Key>
+            <PropertyRef Name="h_haendlername" />
+          </Key>
+          <Property Name="h_haendlername" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="h_haendlerwebseite" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="hp_haendlerkauftprodukt">
+          <Key>
+            <PropertyRef Name="hp_h_haendlername" />
+            <PropertyRef Name="hp_p_gtin" />
+            <PropertyRef Name="hp_p_anbietername" />
+          </Key>
+          <Property Name="hp_h_haendlername" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="hp_p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
+          <Property Name="hp_p_anbietername" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="l_laufwerk">
+          <Key>
+            <PropertyRef Name="l_p_gtin" />
+          </Key>
+          <Property Name="l_isssd" Type="tinyint" Nullable="false" />
+          <Property Name="l_p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="p_produkt">
+          <Key>
+            <PropertyRef Name="p_gtin" />
+          </Key>
+          <Property Name="p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
+          <Property Name="p_a_anbietername" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="p_speicherkapazitaetgb" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="p_preis" Type="int" />
+        </EntityType>
+        <EntityType Name="s_smartphone">
+          <Key>
+            <PropertyRef Name="s_p_gtin" />
+          </Key>
+          <Property Name="s_farbe" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="s_p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="v_verkaufsraum">
+          <Key>
+            <PropertyRef Name="v_adresse" />
+          </Key>
+          <Property Name="v_adresse" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ve_verkauftan">
+          <Key>
+            <PropertyRef Name="ve_gtin" />
+          </Key>
+          <Property Name="ve_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
+          <Property Name="ve_h_haendlervon" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="ve_h_haendleran" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_an_anbieterfiliale_a_anbieter1">
+          <End Role="a_anbieter" Type="Self.a_anbieter" Multiplicity="1" />
+          <End Role="an_anbieterfiliale" Type="Self.an_anbieterfiliale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_anbieter">
+              <PropertyRef Name="a_anbietername" />
+            </Principal>
+            <Dependent Role="an_anbieterfiliale">
+              <PropertyRef Name="an_a_anbietername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_an_anbieterfiliale_v_verkaufsraum1">
+          <End Role="v_verkaufsraum" Type="Self.v_verkaufsraum" Multiplicity="1" />
+          <End Role="an_anbieterfiliale" Type="Self.an_anbieterfiliale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="v_verkaufsraum">
+              <PropertyRef Name="v_adresse" />
+            </Principal>
+            <Dependent Role="an_anbieterfiliale">
+              <PropertyRef Name="a_v_adresse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_c_computer_p_produkt1">
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="c_computer" Type="Self.c_computer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="p_produkt">
+              <PropertyRef Name="p_gtin" />
+            </Principal>
+            <Dependent Role="c_computer">
+              <PropertyRef Name="c_p_gtin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_g_geschaeft_h_haendler1">
+          <End Role="h_haendler" Type="Self.h_haendler" Multiplicity="1" />
+          <End Role="g_geschaeft" Type="Self.g_geschaeft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_haendler">
+              <PropertyRef Name="h_haendlername" />
+            </Principal>
+            <Dependent Role="g_geschaeft">
+              <PropertyRef Name="g_h_haendlername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_g_geschaeft_v_verkaufsraum1">
+          <End Role="v_verkaufsraum" Type="Self.v_verkaufsraum" Multiplicity="1" />
+          <End Role="g_geschaeft" Type="Self.g_geschaeft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="v_verkaufsraum">
+              <PropertyRef Name="v_adresse" />
+            </Principal>
+            <Dependent Role="g_geschaeft">
+              <PropertyRef Name="g_v_adresse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_h_haendler_has_p_produkt_h_haendler1">
+          <End Role="h_haendler" Type="Self.h_haendler" Multiplicity="1" />
+          <End Role="hp_haendlerkauftprodukt" Type="Self.hp_haendlerkauftprodukt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_haendler">
+              <PropertyRef Name="h_haendlername" />
+            </Principal>
+            <Dependent Role="hp_haendlerkauftprodukt">
+              <PropertyRef Name="hp_h_haendlername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_h_haendler_has_p_produkt_p_produkt1">
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="hp_haendlerkauftprodukt" Type="Self.hp_haendlerkauftprodukt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="p_produkt">
+              <PropertyRef Name="p_gtin" />
+            </Principal>
+            <Dependent Role="hp_haendlerkauftprodukt">
+              <PropertyRef Name="hp_p_gtin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_l_laufwerk_p_produkt1">
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="l_laufwerk" Type="Self.l_laufwerk" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="p_produkt">
+              <PropertyRef Name="p_gtin" />
+            </Principal>
+            <Dependent Role="l_laufwerk">
+              <PropertyRef Name="l_p_gtin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_p_produkt_a_anbieter1">
+          <End Role="a_anbieter" Type="Self.a_anbieter" Multiplicity="1" />
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_anbieter">
+              <PropertyRef Name="a_anbietername" />
+            </Principal>
+            <Dependent Role="p_produkt">
+              <PropertyRef Name="p_a_anbietername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_s_smartphone_p_produkt1">
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="s_smartphone" Type="Self.s_smartphone" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="p_produkt">
+              <PropertyRef Name="p_gtin" />
+            </Principal>
+            <Dependent Role="s_smartphone">
+              <PropertyRef Name="s_p_gtin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ve_verkauftan_h_haendler1">
+          <End Role="h_haendler" Type="Self.h_haendler" Multiplicity="1" />
+          <End Role="ve_verkauftan" Type="Self.ve_verkauftan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_haendler">
+              <PropertyRef Name="h_haendlername" />
+            </Principal>
+            <Dependent Role="ve_verkauftan">
+              <PropertyRef Name="ve_h_haendlervon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ve_verkauftan_h_haendler2">
+          <End Role="h_haendler" Type="Self.h_haendler" Multiplicity="1" />
+          <End Role="ve_verkauftan" Type="Self.ve_verkauftan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_haendler">
+              <PropertyRef Name="h_haendlername" />
+            </Principal>
+            <Dependent Role="ve_verkauftan">
+              <PropertyRef Name="ve_h_haendleran" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TechnikmarktModelStoreContainer">
+          <EntitySet Name="a_anbieter" EntityType="Self.a_anbieter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="an_anbieterfiliale" EntityType="Self.an_anbieterfiliale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="c_computer" EntityType="Self.c_computer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="g_geschaeft" EntityType="Self.g_geschaeft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="h_haendler" EntityType="Self.h_haendler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hp_haendlerkauftprodukt" EntityType="Self.hp_haendlerkauftprodukt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="l_laufwerk" EntityType="Self.l_laufwerk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="p_produkt" EntityType="Self.p_produkt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="s_smartphone" EntityType="Self.s_smartphone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_verkaufsraum" EntityType="Self.v_verkaufsraum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ve_verkauftan" EntityType="Self.ve_verkauftan" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_an_anbieterfiliale_a_anbieter1" Association="Self.fk_an_anbieterfiliale_a_anbieter1">
+            <End Role="a_anbieter" EntitySet="a_anbieter" />
+            <End Role="an_anbieterfiliale" EntitySet="an_anbieterfiliale" />
+          </AssociationSet>
+          <AssociationSet Name="fk_an_anbieterfiliale_v_verkaufsraum1" Association="Self.fk_an_anbieterfiliale_v_verkaufsraum1">
+            <End Role="v_verkaufsraum" EntitySet="v_verkaufsraum" />
+            <End Role="an_anbieterfiliale" EntitySet="an_anbieterfiliale" />
+          </AssociationSet>
+          <AssociationSet Name="fk_c_computer_p_produkt1" Association="Self.fk_c_computer_p_produkt1">
+            <End Role="p_produkt" EntitySet="p_produkt" />
+            <End Role="c_computer" EntitySet="c_computer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_g_geschaeft_h_haendler1" Association="Self.fk_g_geschaeft_h_haendler1">
+            <End Role="h_haendler" EntitySet="h_haendler" />
+            <End Role="g_geschaeft" EntitySet="g_geschaeft" />
+          </AssociationSet>
+          <AssociationSet Name="fk_g_geschaeft_v_verkaufsraum1" Association="Self.fk_g_geschaeft_v_verkaufsraum1">
+            <End Role="v_verkaufsraum" EntitySet="v_verkaufsraum" />
+            <End Role="g_geschaeft" EntitySet="g_geschaeft" />
+          </AssociationSet>
+          <AssociationSet Name="fk_h_haendler_has_p_produkt_h_haendler1" Association="Self.fk_h_haendler_has_p_produkt_h_haendler1">
+            <End Role="h_haendler" EntitySet="h_haendler" />
+            <End Role="hp_haendlerkauftprodukt" EntitySet="hp_haendlerkauftprodukt" />
+          </AssociationSet>
+          <AssociationSet Name="fk_h_haendler_has_p_produkt_p_produkt1" Association="Self.fk_h_haendler_has_p_produkt_p_produkt1">
+            <End Role="p_produkt" EntitySet="p_produkt" />
+            <End Role="hp_haendlerkauftprodukt" EntitySet="hp_haendlerkauftprodukt" />
+          </AssociationSet>
+          <AssociationSet Name="fk_l_laufwerk_p_produkt1" Association="Self.fk_l_laufwerk_p_produkt1">
+            <End Role="p_produkt" EntitySet="p_produkt" />
+            <End Role="l_laufwerk" EntitySet="l_laufwerk" />
+          </AssociationSet>
+          <AssociationSet Name="fk_p_produkt_a_anbieter1" Association="Self.fk_p_produkt_a_anbieter1">
+            <End Role="a_anbieter" EntitySet="a_anbieter" />
+            <End Role="p_produkt" EntitySet="p_produkt" />
+          </AssociationSet>
+          <AssociationSet Name="fk_s_smartphone_p_produkt1" Association="Self.fk_s_smartphone_p_produkt1">
+            <End Role="p_produkt" EntitySet="p_produkt" />
+            <End Role="s_smartphone" EntitySet="s_smartphone" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ve_verkauftan_h_haendler1" Association="Self.fk_ve_verkauftan_h_haendler1">
+            <End Role="h_haendler" EntitySet="h_haendler" />
+            <End Role="ve_verkauftan" EntitySet="ve_verkauftan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ve_verkauftan_h_haendler2" Association="Self.fk_ve_verkauftan_h_haendler2">
+            <End Role="h_haendler" EntitySet="h_haendler" />
+            <End Role="ve_verkauftan" EntitySet="ve_verkauftan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TechnikmarktModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="a_anbieter">
+          <Key>
+            <PropertyRef Name="a_anbietername" />
+          </Key>
+          <Property Name="a_anbietername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="a_anbieterwebseite" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="p_produkt" Relationship="Self.fk_p_produkt_a_anbieter1" FromRole="a_anbieter" ToRole="p_produkt" />
+          <NavigationProperty Name="v_verkaufsraum" Relationship="Self.an_anbieterfiliale" FromRole="a_anbieter" ToRole="v_verkaufsraum" />
+        </EntityType>
+        <EntityType Name="c_computer">
+          <Key>
+            <PropertyRef Name="c_p_gtin" />
+          </Key>
+          <Property Name="c_prozessor" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="c_graphikkarte" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="c_p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
+          <NavigationProperty Name="p_produkt" Relationship="Self.fk_c_computer_p_produkt1" FromRole="c_computer" ToRole="p_produkt" />
+        </EntityType>
+        <EntityType Name="h_haendler">
+          <Key>
+            <PropertyRef Name="h_haendlername" />
+          </Key>
+          <Property Name="h_haendlername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_haendlerwebseite" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="hp_haendlerkauftprodukt" Relationship="Self.fk_h_haendler_has_p_produkt_h_haendler1" FromRole="h_haendler" ToRole="hp_haendlerkauftprodukt" />
+          <NavigationProperty Name="ve_verkauftan" Relationship="Self.fk_ve_verkauftan_h_haendler1" FromRole="h_haendler" ToRole="ve_verkauftan" />
+          <NavigationProperty Name="ve_verkauftan1" Relationship="Self.fk_ve_verkauftan_h_haendler2" FromRole="h_haendler" ToRole="ve_verkauftan" />
+          <NavigationProperty Name="v_verkaufsraum" Relationship="Self.g_geschaeft" FromRole="h_haendler" ToRole="v_verkaufsraum" />
+        </EntityType>
+        <EntityType Name="hp_haendlerkauftprodukt">
+          <Key>
+            <PropertyRef Name="hp_h_haendlername" />
+            <PropertyRef Name="hp_p_gtin" />
+            <PropertyRef Name="hp_p_anbietername" />
+          </Key>
+          <Property Name="hp_h_haendlername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hp_p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
+          <Property Name="hp_p_anbietername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="h_haendler" Relationship="Self.fk_h_haendler_has_p_produkt_h_haendler1" FromRole="hp_haendlerkauftprodukt" ToRole="h_haendler" />
+          <NavigationProperty Name="p_produkt" Relationship="Self.fk_h_haendler_has_p_produkt_p_produkt1" FromRole="hp_haendlerkauftprodukt" ToRole="p_produkt" />
+        </EntityType>
+        <EntityType Name="l_laufwerk">
+          <Key>
+            <PropertyRef Name="l_p_gtin" />
+          </Key>
+          <Property Name="l_isssd" Type="Byte" Nullable="false" />
+          <Property Name="l_p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
+          <NavigationProperty Name="p_produkt" Relationship="Self.fk_l_laufwerk_p_produkt1" FromRole="l_laufwerk" ToRole="p_produkt" />
+        </EntityType>
+        <EntityType Name="p_produkt">
+          <Key>
+            <PropertyRef Name="p_gtin" />
+          </Key>
+          <Property Name="p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
+          <Property Name="p_a_anbietername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="p_speicherkapazitaetgb" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="p_preis" Type="Int32" />
+          <NavigationProperty Name="a_anbieter" Relationship="Self.fk_p_produkt_a_anbieter1" FromRole="p_produkt" ToRole="a_anbieter" />
+          <NavigationProperty Name="c_computer" Relationship="Self.fk_c_computer_p_produkt1" FromRole="p_produkt" ToRole="c_computer" />
+          <NavigationProperty Name="hp_haendlerkauftprodukt" Relationship="Self.fk_h_haendler_has_p_produkt_p_produkt1" FromRole="p_produkt" ToRole="hp_haendlerkauftprodukt" />
+          <NavigationProperty Name="l_laufwerk" Relationship="Self.fk_l_laufwerk_p_produkt1" FromRole="p_produkt" ToRole="l_laufwerk" />
+          <NavigationProperty Name="s_smartphone" Relationship="Self.fk_s_smartphone_p_produkt1" FromRole="p_produkt" ToRole="s_smartphone" />
+        </EntityType>
+        <EntityType Name="s_smartphone">
+          <Key>
+            <PropertyRef Name="s_p_gtin" />
+          </Key>
+          <Property Name="s_farbe" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="s_p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
+          <NavigationProperty Name="p_produkt" Relationship="Self.fk_s_smartphone_p_produkt1" FromRole="s_smartphone" ToRole="p_produkt" />
+        </EntityType>
+        <EntityType Name="v_verkaufsraum">
+          <Key>
+            <PropertyRef Name="v_adresse" />
+          </Key>
+          <Property Name="v_adresse" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="a_anbieter" Relationship="Self.an_anbieterfiliale" FromRole="v_verkaufsraum" ToRole="a_anbieter" />
+          <NavigationProperty Name="h_haendler" Relationship="Self.g_geschaeft" FromRole="v_verkaufsraum" ToRole="h_haendler" />
+        </EntityType>
+        <EntityType Name="ve_verkauftan">
+          <Key>
+            <PropertyRef Name="ve_gtin" />
+          </Key>
+          <Property Name="ve_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
+          <Property Name="ve_h_haendlervon" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ve_h_haendleran" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="h_haendler" Relationship="Self.fk_ve_verkauftan_h_haendler1" FromRole="ve_verkauftan" ToRole="h_haendler" />
+          <NavigationProperty Name="h_haendler1" Relationship="Self.fk_ve_verkauftan_h_haendler2" FromRole="ve_verkauftan" ToRole="h_haendler" />
+        </EntityType>
+        <Association Name="fk_p_produkt_a_anbieter1">
+          <End Role="a_anbieter" Type="Self.a_anbieter" Multiplicity="1" />
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="a_anbieter">
+              <PropertyRef Name="a_anbietername" />
+            </Principal>
+            <Dependent Role="p_produkt">
+              <PropertyRef Name="p_a_anbietername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_c_computer_p_produkt1">
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="c_computer" Type="Self.c_computer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="p_produkt">
+              <PropertyRef Name="p_gtin" />
+            </Principal>
+            <Dependent Role="c_computer">
+              <PropertyRef Name="c_p_gtin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_h_haendler_has_p_produkt_h_haendler1">
+          <End Role="h_haendler" Type="Self.h_haendler" Multiplicity="1" />
+          <End Role="hp_haendlerkauftprodukt" Type="Self.hp_haendlerkauftprodukt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_haendler">
+              <PropertyRef Name="h_haendlername" />
+            </Principal>
+            <Dependent Role="hp_haendlerkauftprodukt">
+              <PropertyRef Name="hp_h_haendlername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ve_verkauftan_h_haendler1">
+          <End Role="h_haendler" Type="Self.h_haendler" Multiplicity="1" />
+          <End Role="ve_verkauftan" Type="Self.ve_verkauftan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_haendler">
+              <PropertyRef Name="h_haendlername" />
+            </Principal>
+            <Dependent Role="ve_verkauftan">
+              <PropertyRef Name="ve_h_haendlervon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ve_verkauftan_h_haendler2">
+          <End Role="h_haendler" Type="Self.h_haendler" Multiplicity="1" />
+          <End Role="ve_verkauftan" Type="Self.ve_verkauftan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="h_haendler">
+              <PropertyRef Name="h_haendlername" />
+            </Principal>
+            <Dependent Role="ve_verkauftan">
+              <PropertyRef Name="ve_h_haendleran" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_h_haendler_has_p_produkt_p_produkt1">
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="hp_haendlerkauftprodukt" Type="Self.hp_haendlerkauftprodukt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="p_produkt">
+              <PropertyRef Name="p_gtin" />
+            </Principal>
+            <Dependent Role="hp_haendlerkauftprodukt">
+              <PropertyRef Name="hp_p_gtin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_l_laufwerk_p_produkt1">
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="l_laufwerk" Type="Self.l_laufwerk" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="p_produkt">
+              <PropertyRef Name="p_gtin" />
+            </Principal>
+            <Dependent Role="l_laufwerk">
+              <PropertyRef Name="l_p_gtin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_s_smartphone_p_produkt1">
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="s_smartphone" Type="Self.s_smartphone" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="p_produkt">
+              <PropertyRef Name="p_gtin" />
+            </Principal>
+            <Dependent Role="s_smartphone">
+              <PropertyRef Name="s_p_gtin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="an_anbieterfiliale">
+          <End Role="a_anbieter" Type="Self.a_anbieter" Multiplicity="*" />
+          <End Role="v_verkaufsraum" Type="Self.v_verkaufsraum" Multiplicity="*" />
+        </Association>
+        <Association Name="g_geschaeft">
+          <End Role="h_haendler" Type="Self.h_haendler" Multiplicity="*" />
+          <End Role="v_verkaufsraum" Type="Self.v_verkaufsraum" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TechnikmarktEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="a_anbieter" EntityType="Self.a_anbieter" />
+          <EntitySet Name="c_computer" EntityType="Self.c_computer" />
+          <EntitySet Name="h_haendler" EntityType="Self.h_haendler" />
+          <EntitySet Name="hp_haendlerkauftprodukt" EntityType="Self.hp_haendlerkauftprodukt" />
+          <EntitySet Name="l_laufwerk" EntityType="Self.l_laufwerk" />
+          <EntitySet Name="p_produkt" EntityType="Self.p_produkt" />
+          <EntitySet Name="s_smartphone" EntityType="Self.s_smartphone" />
+          <EntitySet Name="v_verkaufsraum" EntityType="Self.v_verkaufsraum" />
+          <EntitySet Name="ve_verkauftan" EntityType="Self.ve_verkauftan" />
+          <AssociationSet Name="fk_p_produkt_a_anbieter1" Association="Self.fk_p_produkt_a_anbieter1">
+            <End Role="a_anbieter" EntitySet="a_anbieter" />
+            <End Role="p_produkt" EntitySet="p_produkt" />
+          </AssociationSet>
+          <AssociationSet Name="fk_c_computer_p_produkt1" Association="Self.fk_c_computer_p_produkt1">
+            <End Role="p_produkt" EntitySet="p_produkt" />
+            <End Role="c_computer" EntitySet="c_computer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_h_haendler_has_p_produkt_h_haendler1" Association="Self.fk_h_haendler_has_p_produkt_h_haendler1">
+            <End Role="h_haendler" EntitySet="h_haendler" />
+            <End Role="hp_haendlerkauftprodukt" EntitySet="hp_haendlerkauftprodukt" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ve_verkauftan_h_haendler1" Association="Self.fk_ve_verkauftan_h_haendler1">
+            <End Role="h_haendler" EntitySet="h_haendler" />
+            <End Role="ve_verkauftan" EntitySet="ve_verkauftan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ve_verkauftan_h_haendler2" Association="Self.fk_ve_verkauftan_h_haendler2">
+            <End Role="h_haendler" EntitySet="h_haendler" />
+            <End Role="ve_verkauftan" EntitySet="ve_verkauftan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_h_haendler_has_p_produkt_p_produkt1" Association="Self.fk_h_haendler_has_p_produkt_p_produkt1">
+            <End Role="p_produkt" EntitySet="p_produkt" />
+            <End Role="hp_haendlerkauftprodukt" EntitySet="hp_haendlerkauftprodukt" />
+          </AssociationSet>
+          <AssociationSet Name="fk_l_laufwerk_p_produkt1" Association="Self.fk_l_laufwerk_p_produkt1">
+            <End Role="p_produkt" EntitySet="p_produkt" />
+            <End Role="l_laufwerk" EntitySet="l_laufwerk" />
+          </AssociationSet>
+          <AssociationSet Name="fk_s_smartphone_p_produkt1" Association="Self.fk_s_smartphone_p_produkt1">
+            <End Role="p_produkt" EntitySet="p_produkt" />
+            <End Role="s_smartphone" EntitySet="s_smartphone" />
+          </AssociationSet>
+          <AssociationSet Name="an_anbieterfiliale" Association="Self.an_anbieterfiliale">
+            <End Role="a_anbieter" EntitySet="a_anbieter" />
+            <End Role="v_verkaufsraum" EntitySet="v_verkaufsraum" />
+          </AssociationSet>
+          <AssociationSet Name="g_geschaeft" Association="Self.g_geschaeft">
+            <End Role="h_haendler" EntitySet="h_haendler" />
+            <End Role="v_verkaufsraum" EntitySet="v_verkaufsraum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TechnikmarktModelStoreContainer" CdmEntityContainer="TechnikmarktEntities">
+          <EntitySetMapping Name="a_anbieter">
+            <EntityTypeMapping TypeName="TechnikmarktModel.a_anbieter">
+              <MappingFragment StoreEntitySet="a_anbieter">
+                <ScalarProperty Name="a_anbietername" ColumnName="a_anbietername" />
+                <ScalarProperty Name="a_anbieterwebseite" ColumnName="a_anbieterwebseite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="c_computer">
+            <EntityTypeMapping TypeName="TechnikmarktModel.c_computer">
+              <MappingFragment StoreEntitySet="c_computer">
+                <ScalarProperty Name="c_prozessor" ColumnName="c_prozessor" />
+                <ScalarProperty Name="c_graphikkarte" ColumnName="c_graphikkarte" />
+                <ScalarProperty Name="c_p_gtin" ColumnName="c_p_gtin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="h_haendler">
+            <EntityTypeMapping TypeName="TechnikmarktModel.h_haendler">
+              <MappingFragment StoreEntitySet="h_haendler">
+                <ScalarProperty Name="h_haendlername" ColumnName="h_haendlername" />
+                <ScalarProperty Name="h_haendlerwebseite" ColumnName="h_haendlerwebseite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hp_haendlerkauftprodukt">
+            <EntityTypeMapping TypeName="TechnikmarktModel.hp_haendlerkauftprodukt">
+              <MappingFragment StoreEntitySet="hp_haendlerkauftprodukt">
+                <ScalarProperty Name="hp_h_haendlername" ColumnName="hp_h_haendlername" />
+                <ScalarProperty Name="hp_p_gtin" ColumnName="hp_p_gtin" />
+                <ScalarProperty Name="hp_p_anbietername" ColumnName="hp_p_anbietername" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="l_laufwerk">
+            <EntityTypeMapping TypeName="TechnikmarktModel.l_laufwerk">
+              <MappingFragment StoreEntitySet="l_laufwerk">
+                <ScalarProperty Name="l_isssd" ColumnName="l_isssd" />
+                <ScalarProperty Name="l_p_gtin" ColumnName="l_p_gtin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="p_produkt">
+            <EntityTypeMapping TypeName="TechnikmarktModel.p_produkt">
+              <MappingFragment StoreEntitySet="p_produkt">
+                <ScalarProperty Name="p_gtin" ColumnName="p_gtin" />
+                <ScalarProperty Name="p_a_anbietername" ColumnName="p_a_anbietername" />
+                <ScalarProperty Name="p_speicherkapazitaetgb" ColumnName="p_speicherkapazitaetgb" />
+                <ScalarProperty Name="p_preis" ColumnName="p_preis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="s_smartphone">
+            <EntityTypeMapping TypeName="TechnikmarktModel.s_smartphone">
+              <MappingFragment StoreEntitySet="s_smartphone">
+                <ScalarProperty Name="s_farbe" ColumnName="s_farbe" />
+                <ScalarProperty Name="s_p_gtin" ColumnName="s_p_gtin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_verkaufsraum">
+            <EntityTypeMapping TypeName="TechnikmarktModel.v_verkaufsraum">
+              <MappingFragment StoreEntitySet="v_verkaufsraum">
+                <ScalarProperty Name="v_adresse" ColumnName="v_adresse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ve_verkauftan">
+            <EntityTypeMapping TypeName="TechnikmarktModel.ve_verkauftan">
+              <MappingFragment StoreEntitySet="ve_verkauftan">
+                <ScalarProperty Name="ve_gtin" ColumnName="ve_gtin" />
+                <ScalarProperty Name="ve_h_haendlervon" ColumnName="ve_h_haendlervon" />
+                <ScalarProperty Name="ve_h_haendleran" ColumnName="ve_h_haendleran" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="an_anbieterfiliale" TypeName="TechnikmarktModel.an_anbieterfiliale" StoreEntitySet="an_anbieterfiliale">
+            <EndProperty Name="a_anbieter">
+              <ScalarProperty Name="a_anbietername" ColumnName="an_a_anbietername" />
+            </EndProperty>
+            <EndProperty Name="v_verkaufsraum">
+              <ScalarProperty Name="v_adresse" ColumnName="a_v_adresse" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="g_geschaeft" TypeName="TechnikmarktModel.g_geschaeft" StoreEntitySet="g_geschaeft">
+            <EndProperty Name="h_haendler">
+              <ScalarProperty Name="h_haendlername" ColumnName="g_h_haendlername" />
+            </EndProperty>
+            <EndProperty Name="v_verkaufsraum">
+              <ScalarProperty Name="v_adresse" ColumnName="g_v_adresse" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

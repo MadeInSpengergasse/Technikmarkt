@@ -35,8 +35,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +66,64 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AnbieterView.xaml.cs">
+      <DependentUpon>AnbieterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="a_anbieter.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="c_computer.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HaendlerView.xaml.cs">
+      <DependentUpon>HaendlerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hp_haendlerkauftprodukt.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="h_haendler.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="l_laufwerk.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\DelegateCommand.cs" />
+    <Compile Include="p_produkt.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="s_smartphone.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Technikmarktdb_entities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Technikmarktdb_entities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Technikmarktdb_entities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Technikmarktdb_entities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Technikmarktdb_entities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ve_verkauftan.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="model\Viewmodel_Technikmarkt.cs" />
+    <Compile Include="v_verkaufsraum.cs">
+      <DependentUpon>Technikmarktdb_entities.tt</DependentUpon>
+    </Compile>
+    <Page Include="AnbieterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HaendlerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,14 +155,37 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EntityDeploy Include="Technikmarktdb_entities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Technikmarktdb_entities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Technikmarktdb_entities.edmx.diagram">
+      <DependentUpon>Technikmarktdb_entities.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Technikmarktdb_entities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Technikmarktdb_entities.edmx</DependentUpon>
+      <LastGenOutput>Technikmarktdb_entities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Technikmarktdb_entities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Technikmarktdb_entities.edmx</DependentUpon>
+      <LastGenOutput>Technikmarktdb_entities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
