@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
-namespace WpfApplication_3e_dbmodell1.model
+namespace Technikmarkt.model
 {
     public class DelegateCommand : ICommand
     {

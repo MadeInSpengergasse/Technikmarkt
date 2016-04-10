@@ -4,9 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technikmarkt"
+        xmlns:model="clr-namespace:Technikmarkt.model"
         mc:Ignorable="d"
-        Title="AnbieterView" Height="300" Width="300">
-    <Grid>
-        
+        Title="AnbieterView" Height="350" Width="600"  >
+
+    <Window.Resources>
+        <model:Viewmodel_Technikmarkt x:Key="vm" />
+    </Window.Resources>
+
+    <Grid DataContext="{Binding Path= ProduktegewählterAnbieter, Source={StaticResource vm}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="Anbieterinformation" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding selectedAnbieter}">
+            <TextBlock Text="{Binding a_anbietername}" />
+            <TextBlock Text="{Binding a_anbieterwebseite}"/>
+
+
+        </ListBox>
+        <ListBox x:Name="produkte" Grid.Column="0" Grid.Row="1"
+                  ItemsSource="{Binding ProduktegewählterAnbieter}"
+                  DisplayMemberPath="p_gtin"
+                  SelectedValuePath="p_gtin">
+            <ListBox.SelectedValue>
+                <Binding Path="gewähltesProdukt"
+                         Mode="OneWayToSource"
+                         BindsDirectlyToSource="True"/>
+            </ListBox.SelectedValue>
+
+
+            <!--<ListBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding p_gtin}" />
+                    <TextBlock Text="{Binding p_speicherkapazitaet}"/>
+                    <TextBlock Text="{Binding p_a_anbietername}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>-->
+        </ListBox>
     </Grid>
 </Window>

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Technikmarkt.model;
-using WpfApplication_3e_dbmodell1.model;
 
 namespace Technikmarkt.model {
     public class Viewmodel_Technikmarkt : INotifyPropertyChanged {
@@ -30,7 +29,6 @@ namespace Technikmarkt.model {
                         select h).ToList();
             }
         }
-
         string gewaelterAnbieter;
         public string GewaelterAnbieter {
             get { return GewaelterAnbieter; }
@@ -41,16 +39,23 @@ namespace Technikmarkt.model {
             }
         }
 
+        public IEnumerable<a_anbieter> selectedAnbieter {
+            get {
+                return (from a in db.a_anbieter
+                        where a.a_anbietername.Equals(gewaelterAnbieter)
+                        select a).ToList();
+            }
+        }
 
         public IEnumerable<p_produkt> ProduktegewählterAnbieter {
             get {
                 return (from p in db.p_produkt
-                        where p.a_anbieter.Equals(gewaelterAnbieter)
+                        where p.a_anbieter.a_anbietername.Equals(gewaelterAnbieter)
                         select p).ToList();
             }
         }
         ICommand saveinsertstundeCommand;
-        public ICommand SaveInsertstundeCommand {
+        public ICommand SaveInsertCommand {
             get {
                 if (saveinsertstundeCommand == null)
                     saveinsertstundeCommand =
@@ -71,6 +76,7 @@ namespace Technikmarkt.model {
             if (param is a_anbieter) {   //  open window to get more information about anbieter
                 a_anbieter anbieter1 = param as a_anbieter;
                 AnbieterView v1 = new AnbieterView();
+                Console.Write("test");
                 //v1.DataContext = anbieter1;
                 v1.ShowDialog();
             }
