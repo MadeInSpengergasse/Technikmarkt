@@ -31,11 +31,21 @@ namespace Technikmarkt.model {
         }
         string gewaelterAnbieter;
         public string GewaelterAnbieter {
-            get { return GewaelterAnbieter; }
+            get { return gewaelterAnbieter; }
             set {
                 gewaelterAnbieter = value;
                 Console.Write(gewaelterAnbieter);
                 PropertyChanged(this,new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
+            }
+        }
+
+        string gewaehltesProdukt;
+        public string GewaehltesProdukt {
+            get { return gewaehltesProdukt; }
+            set {
+                gewaehltesProdukt = value;
+                Console.Write(gewaehltesProdukt);
+                //PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
         }
 
@@ -76,8 +86,7 @@ namespace Technikmarkt.model {
             if (param is a_anbieter) {   //  open window to get more information about anbieter
                 a_anbieter anbieter1 = param as a_anbieter;
                 AnbieterView v1 = new AnbieterView();
-                Console.Write("test");
-                //v1.DataContext = anbieter1;
+                v1.DataContext = anbieter1;
                 v1.ShowDialog();
             }
 

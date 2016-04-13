@@ -2,8 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Technikmarkt"
+             xmlns:model="clr-namespace:Technikmarkt.model"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <model:Viewmodel_Technikmarkt x:Key="vm" />
     </Application.Resources>
 </Application>

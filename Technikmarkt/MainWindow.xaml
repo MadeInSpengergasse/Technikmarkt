@@ -4,12 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technikmarkt"
-        xmlns:model="clr-namespace:Technikmarkt.model"
         mc:Ignorable="d"
         Title="Technikmarkt Overview" Height="350" Width="600">
-    <Window.Resources>
-        <model:Viewmodel_Technikmarkt x:Key="vm" />
-    </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource vm}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

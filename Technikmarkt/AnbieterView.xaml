@@ -6,13 +6,10 @@
         xmlns:local="clr-namespace:Technikmarkt"
         xmlns:model="clr-namespace:Technikmarkt.model"
         mc:Ignorable="d"
-        Title="AnbieterView" Height="350" Width="600"  >
+        Title="{Binding a_anbietername}" Height="350" Width="600"  >
 
-    <Window.Resources>
-        <model:Viewmodel_Technikmarkt x:Key="vm" />
-    </Window.Resources>
 
-    <Grid DataContext="{Binding Path= ProduktegewählterAnbieter, Source={StaticResource vm}}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -25,32 +22,24 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
 
-        <ListBox x:Name="Anbieterinformation" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding selectedAnbieter}">
-            <TextBlock Text="{Binding a_anbietername}" />
-            <TextBlock Text="{Binding a_anbieterwebseite}"/>
+        <StackPanel>
+            <TextBlock Text="{Binding a_anbietername}" FontSize="22" Margin="4,2,2,0"/>
+            <TextBlock Text="{Binding a_anbieterwebseite}" FontSize="14" Margin="4,0,2,5"/>
+        </StackPanel>
 
+        <TextBlock Text="Produkte" FontSize="22" Margin="4,2,2,0" Grid.Column="1"/>
 
+        <ListBox x:Name="listbox_verkaufsraum"  Grid.Column="0" Grid.Row="1" 
+                 ItemsSource="{Binding v_verkaufsraum}" 
+                 DisplayMemberPath="v_adresse"
+                 SelectedValuePath="v_adresse" Margin="-5,2,4.8,-2.2">
         </ListBox>
-        <ListBox x:Name="produkte" Grid.Column="0" Grid.Row="1"
-                  ItemsSource="{Binding ProduktegewählterAnbieter}"
-                  DisplayMemberPath="p_gtin"
-                  SelectedValuePath="p_gtin">
-            <ListBox.SelectedValue>
-                <Binding Path="gewähltesProdukt"
-                         Mode="OneWayToSource"
-                         BindsDirectlyToSource="True"/>
-            </ListBox.SelectedValue>
 
-
-            <!--<ListBox.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding p_gtin}" />
-                    <TextBlock Text="{Binding p_speicherkapazitaet}"/>
-                    <TextBlock Text="{Binding p_a_anbietername}"/>
-                </StackPanel>
-            </DataTemplate>
-        </ListBox.ItemTemplate>-->
+        <ListBox x:Name="listbox_produkte"  Grid.Column="1" Grid.Row="2"
+                 ItemsSource="{Binding p_produkt}" 
+                 DisplayMemberPath="p_gtin"
+                 SelectedValuePath="p_gtin" Margin="-5,2,4.8,-2.2">
         </ListBox>
+        
     </Grid>
 </Window>
