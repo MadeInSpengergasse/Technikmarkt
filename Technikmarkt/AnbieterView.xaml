@@ -9,7 +9,7 @@
         Title="{Binding a_anbietername}" Height="350" Width="600"  >
 
 
-    <Grid>
+    <Grid Background="DarkGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>

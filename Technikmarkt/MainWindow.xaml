@@ -5,49 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technikmarkt"
         mc:Ignorable="d"
-        Title="Technikmarkt Overview" Height="350" Width="600">
-    <Grid DataContext="{Binding Source={StaticResource vm}}">
+        Title="Technikmarkt Overview" Height="450" Width="700" MinHeight="250" MinWidth="380">
+
+    <Grid Background="DarkGray">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-            <TextBlock Text="Anbieter" TextAlignment="Left" FontSize="24" Grid.Column="0" Grid.Row="0"/>
-        <ListBox x:Name="Listbox_anbieter" Grid.Column="0" Grid.Row="1" 
-                 ItemsSource="{Binding AlleAnbieter}" 
+
+        <Grid Grid.Row="0" Background="DarkGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" x:Name="suchfeld" Margin="6 7 3 5"></TextBox>
+            <Button Grid.Column="1" x:Name="suchfeld_button" IsDefault="true" Click="suchfeld_button_click" Content="Suchen" Margin="0 7 6 5"/>
+        </Grid>
+
+        <Separator Grid.Row="1" Background="Gray"/>
+
+        <Grid Grid.Row="2" DataContext="{Binding Source={StaticResource vm}}" Background="DarkGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Anbieter" TextAlignment="Left" FontSize="24" Margin="6 0 6 0" Grid.Column="0" Grid.Row="0"/>
+            <ListBox x:Name="Listbox_anbieter" Margin="6 0 6 0" Grid.Column="0" Grid.Row="1" 
                  DisplayMemberPath="a_anbietername"
                  SelectedValuePath="a_anbietername">
-            <ListBox.SelectedValue>
-                <Binding Path="GewaelterAnbieter"
+                <ListBox.SelectedValue>
+                    <Binding Path="GewaelterAnbieter"
                          Mode="OneWayToSource"
                          BindsDirectlyToSource="True" />
-            </ListBox.SelectedValue>
-        </ListBox>
+                </ListBox.SelectedValue>
+            </ListBox>
 
-        <TextBlock Text="Händler"  TextAlignment="Left" FontSize="24" Grid.Column="1" Grid.Row="0"/>
-
-        <ListBox x:Name="Listbox_haendler" Grid.Column="1" Grid.Row="1"
-                 ItemsSource="{Binding AlleHaendler}" 
-                 DisplayMemberPath="h_haendlername"
+            <TextBlock Text="Händler"  TextAlignment="Left" FontSize="24" Margin="0 0 6 0" Grid.Column="1" Grid.Row="0"/>
+            <ListBox x:Name="Listbox_haendler" Margin="0 0 6 0" Grid.Column="1" Grid.Row="1"
+                DisplayMemberPath="h_haendlername"
                  SelectedValuePath="h_haendlername">
-            <ListBox.SelectedValue>
-                <Binding Path="GewaelterHaendler"
+                <ListBox.SelectedValue>
+                    <Binding Path="GewaelterHaendler"
                          Mode="OneWayToSource"
                          BindsDirectlyToSource="True" />
-            </ListBox.SelectedValue>
-        </ListBox>
+                </ListBox.SelectedValue>
+            </ListBox>
 
-        <Button x:Name="anbieter_information_button" Content="Anbieter Information" Grid.Column="0" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"
+            <Button x:Name="anbieter_information_button" Content="Anbieter Information" Grid.Column="0" Grid.Row="2" Margin="6 5 6 5"
                 Command="{Binding SaveInsertCommand}" 
-                CommandParameter="{Binding ElementName=Listbox_anbieter, Path=SelectedItem}"
-                />
-        <!-- SaveInsertCommand sollte umbenannt werden -->
-        <Button x:Name="haendler_information_button" Content="Händler Information" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8"
+                CommandParameter="{Binding ElementName=Listbox_anbieter, Path=SelectedItem}"/>
+            <!-- SaveInsertCommand sollte umbenannt werden -->
+            <Button x:Name="haendler_information_button" Content="Händler Information" Grid.Column="1" Grid.Row="2" Margin="0 5 6 5"
                 Command="{Binding SaveInsertCommand}" 
-                CommandParameter="{Binding ElementName=Listbox_haendler, Path=SelectedItem}"
-                />
+                CommandParameter="{Binding ElementName=Listbox_haendler, Path=SelectedItem}"/>
+        </Grid>
     </Grid>
 </Window>
