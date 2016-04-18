@@ -35,7 +35,17 @@ namespace Technikmarkt.model {
             set {
                 gewaelterAnbieter = value;
                 Console.Write(gewaelterAnbieter);
-                PropertyChanged(this,new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
+                //PropertyChanged(this,new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
+            }
+        }
+
+        string gewaehlterHaendler;
+        public string GewaehlterHaendler {
+            get { return gewaehlterHaendler; }
+            set {
+                gewaehlterHaendler = value;
+                Console.Write(gewaelterAnbieter);
+                //PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
         }
 
@@ -64,6 +74,23 @@ namespace Technikmarkt.model {
                         select p).ToList();
             }
         }
+
+        public IEnumerable<v_verkaufsraum> geschaefteAnbieter {
+            get {
+                return (from g in db.v_verkaufsraum
+                        where g.a_anbieter.Equals(gewaelterAnbieter)
+                        select g).ToList();
+            }
+        }
+
+        public IEnumerable<v_verkaufsraum> geschaefteHaendler {
+            get {
+                return (from g in db.v_verkaufsraum
+                        where g.h_haendler.Equals(gewaehlterHaendler)
+                        select g).ToList();
+            }
+        }
+
         ICommand saveinsertstundeCommand;
         public ICommand SaveInsertCommand {
             get {
@@ -91,9 +118,9 @@ namespace Technikmarkt.model {
             }
 
             if (param is h_haendler) {   //  edit existing  stunde
-                h_haendler m1 = param as h_haendler;
+                h_haendler haendler1 = param as h_haendler;
                 HaendlerView v1 = new HaendlerView();
-                //v1.DataContext = m1;
+                v1.DataContext = haendler1;
                 v1.ShowDialog();
                 }
 

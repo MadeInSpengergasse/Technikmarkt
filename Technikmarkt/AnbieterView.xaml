@@ -51,7 +51,7 @@
             <TextBlock Text="{Binding p_a_anbietername}" />
             <TextBlock Text="Speicherkapazität in GB" />
             <TextBox Text="{Binding p_speicherkapazitaetgb}" />
-            <TextBlock Text="Preis " />
+            <TextBlock Text="Preis in €" />
             <TextBox Text="{Binding p_preis}" />
 
             <Button x:Name="edit_produkt_button" Content="Produkt ändern"   HorizontalAlignment="Center" Margin="2,10,2,2" Width="120"
