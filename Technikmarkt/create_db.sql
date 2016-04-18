@@ -6,6 +6,7 @@
 
 CREATE TABLE p_produkt (
   p_gtin decimal(13,0) check(p_gtin > 1000000000000) ,
+  p_name VARCHAR(150) NOT NULL,
   p_a_anbietername VARCHAR(150)  NOT NULL ,
   p_speicherkapazitaetgb DECIMAL NULL ,
   p_preis INT NULL ,

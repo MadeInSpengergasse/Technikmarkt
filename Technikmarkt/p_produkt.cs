@@ -21,6 +21,7 @@ namespace Technikmarkt
         }
     
         public decimal p_gtin { get; set; }
+        public string p_name { get; set; }
         public string p_a_anbietername { get; set; }
         public Nullable<decimal> p_speicherkapazitaetgb { get; set; }
         public Nullable<int> p_preis { get; set; }

@@ -32,14 +32,44 @@
         <ListBox x:Name="listbox_verkaufsraum"  Grid.Column="0" Grid.Row="1" 
                  ItemsSource="{Binding v_verkaufsraum}" 
                  DisplayMemberPath="v_adresse"
-                 SelectedValuePath="v_adresse" Margin="-5,2,4.8,-2.2">
+                 SelectedValuePath="v_adresse">
         </ListBox>
 
         <ListBox x:Name="listbox_produkte"  Grid.Column="1" Grid.Row="2"
                  ItemsSource="{Binding p_produkt}" 
-                 DisplayMemberPath="p_gtin"
-                 SelectedValuePath="p_gtin" Margin="-5,2,4.8,-2.2">
+                 DisplayMemberPath="p_name"
+                 SelectedValuePath="p_gtin" >
         </ListBox>
-        
+
+        <StackPanel Grid.Column="2" Grid.Row="1" DataContext="{Binding ElementName=listbox_produkte, Path=SelectedItem}" >
+
+            <TextBlock Text="Produkt GTIN" />
+            <TextBox Text="{Binding p_gtin}" />
+            <TextBlock Text="Produktname" />
+            <TextBox Text="{Binding p_name}" />
+            <TextBlock Text="Anbietername" />
+            <TextBlock Text="{Binding p_a_anbietername}" />
+            <TextBlock Text="Speicherkapazität in GB" />
+            <TextBox Text="{Binding p_speicherkapazitaetgb}" />
+            <TextBlock Text="Preis " />
+            <TextBox Text="{Binding p_preis}" />
+
+            <Button x:Name="edit_produkt_button" Content="Produkt ändern"   HorizontalAlignment="Center" Margin="2,10,2,2" Width="120"
+                Command="{Binding SaveInsertCommand}" 
+                CommandParameter="{Binding ElementName=listbox_produkte, Path=SelectedItem}"
+                />
+
+         <Button x:Name="delete_produkt_button" Content="Produkt löschen"   HorizontalAlignment="Center" Margin="2" Width="120"
+                Command="{Binding SaveInsertCommand}" 
+                CommandParameter="{Binding ElementName=listbox_produkte, Path=SelectedItem}"
+                />
+
+         <Button x:Name="speicher_produkt_button" Content="Produkt speichern"  HorizontalAlignment="Center" Margin="2" Width="120"
+                Command="{Binding SaveInsertCommand}" 
+                CommandParameter="{Binding ElementName=listbox_produkte, Path=SelectedItem}"
+                />
+        </StackPanel>
+
+
     </Grid>
 </Window>

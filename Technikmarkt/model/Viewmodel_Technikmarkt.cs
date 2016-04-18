@@ -45,7 +45,7 @@ namespace Technikmarkt.model {
             set {
                 gewaehltesProdukt = value;
                 Console.Write(gewaehltesProdukt);
-                //PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
+                PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
         }
 
