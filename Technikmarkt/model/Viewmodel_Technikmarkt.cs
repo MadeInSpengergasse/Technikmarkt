@@ -75,21 +75,7 @@ namespace Technikmarkt.model {
             }
         }
 
-        public IEnumerable<v_verkaufsraum> geschaefteAnbieter {
-            get {
-                return (from g in db.v_verkaufsraum
-                        where g.a_anbieter.Equals(gewaelterAnbieter)
-                        select g).ToList();
-            }
-        }
-
-        public IEnumerable<v_verkaufsraum> geschaefteHaendler {
-            get {
-                return (from g in db.v_verkaufsraum
-                        where g.h_haendler.Equals(gewaehlterHaendler)
-                        select g).ToList();
-            }
-        }
+        
 
         ICommand saveinsertstundeCommand;
         public ICommand SaveInsertCommand {
