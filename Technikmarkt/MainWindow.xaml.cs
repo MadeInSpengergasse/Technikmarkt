@@ -1,10 +1,10 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,9 +23,14 @@ namespace Technikmarkt {
     public partial class MainWindow : Window {
 
         TechnikmarktEntities db = new TechnikmarktEntities();
+        IEnumerable<a_anbieter> lB_anbieter_IS_orig;
+        IEnumerable<h_haendler> lB_haendler_IS_orig;
 
         public MainWindow() {
             InitializeComponent();
+
+            lB_anbieter_IS_orig =(IEnumerable<a_anbieter>) Listbox_anbieter.ItemsSource;
+            lB_haendler_IS_orig = (IEnumerable<h_haendler>) Listbox_haendler.ItemsSource;
         }
 
         private void suchfeld_button_click(object sender, RoutedEventArgs e) {
@@ -38,9 +43,24 @@ namespace Technikmarkt {
                 IEnumerable<h_haendler> haendler = from h in db.h_haendler where h.h_haendlername.ToLower().StartsWith(name) select h;
                 Listbox_haendler.ItemsSource=haendler.ToList();
             } else {
-                MessageBox.Show("Bitte geben sie einen zu suchenden Händler- oder Anbieternamen ein!", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                Listbox_anbieter.ItemsSource=lB_anbieter_IS_orig.ToList();
+                Listbox_haendler.ItemsSource=lB_haendler_IS_orig.ToList();
+
             }
+        }
+
+        private void sortiment_button_click(object sender, RoutedEventArgs e) {
+            a_anbieter anbieter = Listbox_anbieter.SelectedItem as a_anbieter;
+            SortimentView v1 = new SortimentView();
+            v1.DataContext=anbieter;
+            v1.Show();
+        }
+
+        private void haendler_button_click(object sender, RoutedEventArgs e) {
+            h_haendler haendler = Listbox_haendler.SelectedItem as h_haendler;
+            HaendlerView v1 = new HaendlerView();
+            v1.DataContext=haendler;
+            v1.Show();
         }
     }
 }

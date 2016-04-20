@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 namespace Technikmarkt {
     /// <summary>
-    /// Interaction logic for HaendlerView.xaml
+    /// Interaction logic for AnbieterView.xaml
     /// </summary>
     public partial class HaendlerView : Window {
         public HaendlerView() {

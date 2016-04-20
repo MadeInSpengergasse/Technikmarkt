@@ -33,7 +33,7 @@ namespace Technikmarkt.model {
         public string GewaelterAnbieter {
             get { return gewaelterAnbieter; }
             set {
-                gewaelterAnbieter = value;
+                gewaelterAnbieter=value;
                 Console.Write(gewaelterAnbieter);
                 //PropertyChanged(this,new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
@@ -43,7 +43,7 @@ namespace Technikmarkt.model {
         public string GewaehlterHaendler {
             get { return gewaehlterHaendler; }
             set {
-                gewaehlterHaendler = value;
+                gewaehlterHaendler=value;
                 Console.Write(gewaelterAnbieter);
                 //PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
@@ -53,7 +53,7 @@ namespace Technikmarkt.model {
         public string GewaehltesProdukt {
             get { return gewaehltesProdukt; }
             set {
-                gewaehltesProdukt = value;
+                gewaehltesProdukt=value;
                 Console.Write(gewaehltesProdukt);
                 PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
@@ -75,13 +75,13 @@ namespace Technikmarkt.model {
             }
         }
 
-        
+
 
         ICommand saveinsertstundeCommand;
         public ICommand SaveInsertCommand {
             get {
-                if (saveinsertstundeCommand == null)
-                    saveinsertstundeCommand =
+                if(saveinsertstundeCommand==null)
+                    saveinsertstundeCommand=
                         new DelegateCommand(SaveExecuted,
                                             SaveCanExecute);
                 return saveinsertstundeCommand;
@@ -89,29 +89,18 @@ namespace Technikmarkt.model {
         }
 
         public bool SaveCanExecute(object param) {
-            if (param == null)
+            if(param==null)
                 return false;
             else
                 return true;
         }
 
         public void SaveExecuted(object param) {
-            if (param is a_anbieter) {   //  open window to get more information about anbieter
-                a_anbieter anbieter1 = param as a_anbieter;
-                AnbieterView v1 = new AnbieterView();
-                v1.DataContext = anbieter1;
-                v1.ShowDialog();
-            }
-
-            if (param is h_haendler) {   //  edit existing  stunde
-                h_haendler haendler1 = param as h_haendler;
-                HaendlerView v1 = new HaendlerView();
-                v1.DataContext = haendler1;
-                v1.ShowDialog();
-                }
-
-            }
+            a_anbieter anbieter1 = param as a_anbieter;
+            AnbieterView v1 = new AnbieterView();
+            v1.DataContext=anbieter1;
+            v1.Show();
         }
     }
-
+}
 

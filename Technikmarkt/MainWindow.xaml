@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technikmarkt"
         mc:Ignorable="d"
-        Title="Technikmarkt Overview" Height="450" Width="700" MinHeight="250" MinWidth="380">
+        Title="Technikmarkt Overview" Height="450" Width="700" MinHeight="250" MinWidth="550">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
 
     <Grid Background="DarkGray">
         <Grid.ColumnDefinitions>
@@ -17,19 +20,24 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="DarkGray">
+        <Grid Grid.Row="0" Background="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0" x:Name="suchfeld" Margin="6 7 3 5"></TextBox>
+            <!--<TextBox Grid.Column="0" x:Name="suchfeld" Margin="6 7 3 5"></TextBox>-->
+            <Grid Grid.Column="0" Background="White" Margin="6 7 3 5">
+                <TextBlock VerticalAlignment="Center" Margin="4 0 0 0" Text="Anbieter- oder Händlername..." Foreground="Gray" 
+                       Visibility="{Binding ElementName=suchfeld, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBox x:Name="suchfeld" Background="Transparent"/>
+            </Grid>
             <Button Grid.Column="1" x:Name="suchfeld_button" IsDefault="true" Click="suchfeld_button_click" Content="Suchen" Margin="0 7 6 5"/>
         </Grid>
 
-        <Separator Grid.Row="1" Background="Gray"/>
+        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Fill="DarkGray" Height="2"/>
 
-        <Grid Grid.Row="2" DataContext="{Binding Source={StaticResource vm}}" Background="DarkGray">
+        <Grid Grid.Row="2" DataContext="{Binding Source={StaticResource vm}}" Background="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -40,8 +48,9 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Anbieter" TextAlignment="Left" FontSize="24" Margin="6 0 6 0" Grid.Column="0" Grid.Row="0"/>
-            <ListBox x:Name="Listbox_anbieter" Margin="6 0 6 0" Grid.Column="0" Grid.Row="1" 
+            <TextBlock Text="Anbieter" TextAlignment="Left" FontSize="24" Margin="6 0 3 0" Grid.Column="0" Grid.Row="0"/>
+            <ListBox x:Name="Listbox_anbieter" Margin="6 0 3 0" Grid.Column="0" Grid.Row="1"
+                 ItemsSource="{Binding AlleAnbieter}"
                  DisplayMemberPath="a_anbietername"
                  SelectedValuePath="a_anbietername">
                 <ListBox.SelectedValue>
@@ -51,8 +60,9 @@
                 </ListBox.SelectedValue>
             </ListBox>
 
-            <TextBlock Text="Händler"  TextAlignment="Left" FontSize="24" Margin="0 0 6 0" Grid.Column="1" Grid.Row="0"/>
-            <ListBox x:Name="Listbox_haendler" Margin="0 0 6 0" Grid.Column="1" Grid.Row="1"
+            <TextBlock Text="Händler"  TextAlignment="Left" FontSize="24" Margin="3 0 6 0" Grid.Column="1" Grid.Row="0"/>
+            <ListBox x:Name="Listbox_haendler" Margin="3 0 6 0" Grid.Column="1" Grid.Row="1"
+                ItemsSource="{Binding AlleHaendler}" 
                 DisplayMemberPath="h_haendlername"
                  SelectedValuePath="h_haendlername">
                 <ListBox.SelectedValue>
@@ -62,13 +72,23 @@
                 </ListBox.SelectedValue>
             </ListBox>
 
-            <Button x:Name="anbieter_information_button" Content="Anbieter Information" Grid.Column="0" Grid.Row="2" Margin="6 5 6 5"
+            <!-- SaveInsertCommand sollte umbenannt werden -->
+            <Grid Grid.Column="0" Grid.Row="2" Margin="6 5 3 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="sortiment_button" Grid.Column="0" Content="Sortiment" Margin="0 0 3 0"
+                Click="sortiment_button_click" IsEnabled="{Binding ElementName=Listbox_anbieter, Path=SelectedItems.Count}"/>
+
+                <Button x:Name="anbieter_information_button" Grid.Column="1" Content="Anbieter Information" Margin="3 0 0 0"
                 Command="{Binding SaveInsertCommand}" 
                 CommandParameter="{Binding ElementName=Listbox_anbieter, Path=SelectedItem}"/>
-            <!-- SaveInsertCommand sollte umbenannt werden -->
-            <Button x:Name="haendler_information_button" Content="Händler Information" Grid.Column="1" Grid.Row="2" Margin="0 5 6 5"
-                Command="{Binding SaveInsertCommand}" 
-                CommandParameter="{Binding ElementName=Listbox_haendler, Path=SelectedItem}"/>
+            </Grid>
+
+            <Button x:Name="haendler_information_button" Content="Händler Information" Grid.Column="1" Grid.Row="2" Margin="3 5 6 5"
+                Click="haendler_button_click" IsEnabled="{Binding ElementName=Listbox_haendler, Path=SelectedItems.Count}"/>
         </Grid>
     </Grid>
 </Window>
