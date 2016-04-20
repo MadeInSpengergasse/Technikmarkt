@@ -96,10 +96,19 @@ namespace Technikmarkt.model {
         }
 
         public void SaveExecuted(object param) {
-            a_anbieter anbieter1 = param as a_anbieter;
-            AnbieterView v1 = new AnbieterView();
-            v1.DataContext=anbieter1;
-            v1.Show();
+            if(param is a_anbieter) {   //  open window to get more information about anbieter
+                a_anbieter anbieter1 = param as a_anbieter;
+                SortimentView sv = new SortimentView();
+                sv.DataContext=anbieter1;
+                sv.ShowDialog();
+            }
+
+            if(param is h_haendler) {   //  edit existing  stunde
+                h_haendler haendler1 = param as h_haendler;
+                HaendlerView hv = new HaendlerView();
+                hv.DataContext=haendler1;
+                hv.ShowDialog();
+            }
         }
     }
 }

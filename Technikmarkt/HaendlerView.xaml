@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Technikmarkt"
         xmlns:model="clr-namespace:Technikmarkt.model"
         mc:Ignorable="d"
-        Title="{Binding h_haendlername}" Height="150" Width="370"  >
+        Title="Technikmarkt v1.0 - Händler Information" Height="150" Width="370"  >
 
 
     <Grid Background="LightGray">

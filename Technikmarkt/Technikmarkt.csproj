@@ -72,9 +72,6 @@
     <Compile Include="HaendlerView.xaml.cs">
       <DependentUpon>HaendlerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AnbieterView.xaml.cs">
-      <DependentUpon>AnbieterView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SortimentView.xaml.cs">
       <DependentUpon>SortimentView.xaml</DependentUpon>
     </Compile>
@@ -123,10 +120,6 @@
       <DependentUpon>db.tt</DependentUpon>
     </Compile>
     <Page Include="HaendlerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="AnbieterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

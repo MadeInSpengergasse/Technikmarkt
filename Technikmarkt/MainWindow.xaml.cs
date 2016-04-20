@@ -48,19 +48,5 @@ namespace Technikmarkt {
 
             }
         }
-
-        private void sortiment_button_click(object sender, RoutedEventArgs e) {
-            a_anbieter anbieter = Listbox_anbieter.SelectedItem as a_anbieter;
-            SortimentView v1 = new SortimentView();
-            v1.DataContext=anbieter;
-            v1.Show();
-        }
-
-        private void haendler_button_click(object sender, RoutedEventArgs e) {
-            h_haendler haendler = Listbox_haendler.SelectedItem as h_haendler;
-            HaendlerView v1 = new HaendlerView();
-            v1.DataContext=haendler;
-            v1.Show();
-        }
     }
 }
