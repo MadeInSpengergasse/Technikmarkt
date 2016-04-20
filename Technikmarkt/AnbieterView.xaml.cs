@@ -27,11 +27,13 @@ namespace Technikmarkt {
        
          private void speichern_Click(object sender, RoutedEventArgs e) {
              fehler.Text = "";
+             
              try {
                 var p1 = (p_produkt)listbox_produkte.SelectedItem;
                 if (p1.p_gtin >= 1000000000000) {
+                    
                     int anzzeilen = db.SaveChanges();
-                    fehler.Text = anzzeilen + " Veränderungen in der Datenbank";
+                    fehler.Text = anzzeilen + " Datensätze hinzugefügt";
                 }
                 else {
                     fehler.Text = "GTIN must have 13 digits";

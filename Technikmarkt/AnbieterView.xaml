@@ -59,7 +59,8 @@
 
            <Button x:Name="speicher_produkt_button" Content="Produkt speichern" Click="speichern_Click" HorizontalAlignment="Center" Margin="2" Width="120" />
 
-            <Button x:Name="delete_produkt_button" Content="Produkt löschen" Click="loesch_Click" HorizontalAlignment="Center" Margin="2" Width="120"/>
+            <Button x:Name="loesch_produkt_button" Content="Produkt löschen" Click="loesch_Click" HorizontalAlignment="Center" Margin="2" Width="120"
+                     IsEnabled="{Binding ElementName=listbox_produkte, Path=SelectedItems.Count}"/>
             
            <TextBlock x:Name="fehler" Foreground="Red" TextWrapping="Wrap" />
 
