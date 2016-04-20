@@ -45,7 +45,6 @@ namespace Technikmarkt {
             } else {
                 Listbox_anbieter.ItemsSource=lB_anbieter_IS_orig.ToList();
                 Listbox_haendler.ItemsSource=lB_haendler_IS_orig.ToList();
-
             }
         }
     }

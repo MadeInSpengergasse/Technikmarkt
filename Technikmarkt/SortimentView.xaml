@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Technikmarkt"
         xmlns:model="clr-namespace:Technikmarkt.model"
         mc:Ignorable="d"
-        Title="Technikmarkt v1.0 - Anbieter Information u. Sortiment" Height="400" Width="600" MinHeight="320" MinWidth="300">
+        Title="Technikmarkt v1.0 - Anbieter Information u. Sortiment" Height="400" Width="600" MinHeight="380" MinWidth="300">
 
     <Grid Background="LightGray">
         <Grid.RowDefinitions>
