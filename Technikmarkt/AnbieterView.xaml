@@ -6,66 +6,24 @@
         xmlns:local="clr-namespace:Technikmarkt"
         xmlns:model="clr-namespace:Technikmarkt.model"
         mc:Ignorable="d"
-        Title="{Binding a_anbietername}" Height="400" Width="600"  >
+        Title="{Binding a_anbietername}" Height="150" Width="370"  >
 
 
-    <Grid Background="DarkGray">
+    <Grid Background="LightGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            
+
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel>
-            <TextBlock Text="{Binding a_anbietername}" FontSize="22" Margin="4,2,2,0"/>
-            <TextBlock Text="{Binding a_anbieterwebseite}" FontSize="14" Margin="4,0,2,5"/>
-        </StackPanel>
-
-        <TextBlock Text="Produkte" FontSize="22" Margin="4,2,2,0" Grid.Column="1"/>
-
-        <ListBox x:Name="listbox_verkaufsraum"  Grid.Column="0" Grid.Row="1" 
-                 ItemsSource="{Binding v_verkaufsraum}" 
-                 DisplayMemberPath="v_adresse"
-                 SelectedValuePath="v_adresse">
-        </ListBox>
-
-        <ListBox x:Name="listbox_produkte"  Grid.Column="1" Grid.Row="2"
-                 ItemsSource="{Binding p_produkt}" 
-                 DisplayMemberPath="p_name"
-                 SelectedValuePath="p_gtin" >
-        </ListBox>
-
-        <StackPanel Grid.Column="2" Grid.Row="1" DataContext="{Binding ElementName=listbox_produkte, Path=SelectedItem}" >
-
-            <TextBlock Text="Produkt GTIN" />
-            <TextBox Text="{Binding p_gtin}" MaxLength="13"/>
-            <TextBlock Text="Produktname" />
-            <TextBox Text="{Binding p_name}" />
-            <TextBlock Text="Anbietername" />
-            <TextBlock Text="{Binding p_a_anbietername}" x:Name="produkt_anbieter"/>
-            <TextBlock Text="Speicherkapazität in GB" />
-            <TextBox Text="{Binding p_speicherkapazitaetgb}" />
-            <TextBlock Text="Preis in €" />
-            <TextBox Text="{Binding p_preis}" />
-
-            <Button x:Name="neues_produkt_button" Content="neues Produkt" Click="neu_Click" HorizontalAlignment="Center" Margin="2,10,2,2" Width="120"
-                     IsEnabled="{Binding ElementName=listbox_produkte, Path=SelectedItems.Count}"/>
-
-           <Button x:Name="speicher_produkt_button" Content="Produkt speichern" Click="speichern_Click" HorizontalAlignment="Center" Margin="2" Width="120" />
-
-            <Button x:Name="loesch_produkt_button" Content="Produkt löschen" Click="loesch_Click" HorizontalAlignment="Center" Margin="2" Width="120"
-                     IsEnabled="{Binding ElementName=listbox_produkte, Path=SelectedItems.Count}"/>
-            
-           <TextBlock x:Name="fehler" Foreground="Red" TextWrapping="Wrap" />
-
-        </StackPanel>
-
-
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Name:" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="22"/>
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding a_anbietername}" VerticalAlignment="Center" FontSize="18"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Website:" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="22"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding a_anbieterwebseite}" VerticalAlignment="Center" FontSize="18"/>
     </Grid>
 </Window>

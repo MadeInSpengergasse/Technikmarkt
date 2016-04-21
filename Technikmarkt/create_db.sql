@@ -20,7 +20,7 @@ CREATE TABLE p_produkt (
 
 CREATE TABLE c_computer (
   c_prozessor VARCHAR(150) NOT NULL ,
-  c_graphikkarte VARCHAR(150) NOT NULL ,
+  c_grafikkarte VARCHAR(150) NOT NULL ,
   c_p_gtin decimal(13,0) check(c_p_gtin > 1000000000000) ,
   PRIMARY KEY (c_p_gtin asc)  ,
   CONSTRAINT fk_c_computer_p_produkt1
@@ -163,8 +163,8 @@ insert into p_produkt (p_gtin, p_name, p_a_anbietername,p_speicherkapazitaetgb,p
 insert into s_smartphone (s_farbe, s_p_gtin) values ('Gunmetal grey', 3491259353835);
 insert into s_smartphone (s_farbe, s_p_gtin) values ('Rose gold',  5155067118967);
 
-insert into c_computer (c_prozessor, c_graphikkarte, c_p_gtin) values ('AMD FX-8300', 'NVIDIA GTX 960M', 6311141528556);
-insert into c_computer (c_prozessor, c_graphikkarte, c_p_gtin) values ('Intel i7-6700HQ', 'AMD Radeon R9 390X',1678229819502);
+insert into c_computer (c_prozessor, c_grafikkarte, c_p_gtin) values ('AMD FX-8300', 'NVIDIA GTX 960M', 6311141528556);
+insert into c_computer (c_prozessor, c_grafikkarte, c_p_gtin) values ('Intel i7-6700HQ', 'AMD Radeon R9 390X',1678229819502);
 
 insert into l_laufwerk (l_isssd,l_p_gtin) values (0,9280930334340);
 insert into l_laufwerk (l_isssd,l_p_gtin) values (1,5524683880690);

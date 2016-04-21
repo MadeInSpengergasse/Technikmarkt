@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Technikmarkt.model;
 
@@ -16,24 +17,26 @@ namespace Technikmarkt.model {
 
         public IEnumerable<a_anbieter> AlleAnbieter {
             get {
+                // Only get the first 40 entries to avoid slowdowns at program start
                 return (from a in db.a_anbieter
                         orderby a.a_anbietername
-                        select a).ToList();
+                        select a).Take(40).ToList();
             }
         }
 
         public IEnumerable<h_haendler> AlleHaendler {
             get {
+                // Only get the first 40 entries to avoid slowdowns at program start
                 return (from h in db.h_haendler
                         orderby h.h_haendlername
-                        select h).ToList();
+                        select h).Take(40).ToList();
             }
         }
         string gewaelterAnbieter;
         public string GewaelterAnbieter {
             get { return gewaelterAnbieter; }
             set {
-                gewaelterAnbieter = value;
+                gewaelterAnbieter=value;
                 Console.Write(gewaelterAnbieter);
                 //PropertyChanged(this,new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
@@ -43,7 +46,7 @@ namespace Technikmarkt.model {
         public string GewaehlterHaendler {
             get { return gewaehlterHaendler; }
             set {
-                gewaehlterHaendler = value;
+                gewaehlterHaendler=value;
                 Console.Write(gewaelterAnbieter);
                 //PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
@@ -53,7 +56,7 @@ namespace Technikmarkt.model {
         public string GewaehltesProdukt {
             get { return gewaehltesProdukt; }
             set {
-                gewaehltesProdukt = value;
+                gewaehltesProdukt=value;
                 Console.Write(gewaehltesProdukt);
                 PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
             }
@@ -75,13 +78,13 @@ namespace Technikmarkt.model {
             }
         }
 
-        
+
 
         ICommand saveinsertstundeCommand;
         public ICommand SaveInsertCommand {
             get {
-                if (saveinsertstundeCommand == null)
-                    saveinsertstundeCommand =
+                if(saveinsertstundeCommand==null)
+                    saveinsertstundeCommand=
                         new DelegateCommand(SaveExecuted,
                                             SaveCanExecute);
                 return saveinsertstundeCommand;
@@ -89,29 +92,33 @@ namespace Technikmarkt.model {
         }
 
         public bool SaveCanExecute(object param) {
-            if (param == null)
+            if(param==null)
                 return false;
             else
                 return true;
         }
 
         public void SaveExecuted(object param) {
-            if (param is a_anbieter) {   //  open window to get more information about anbieter
+            if(param is a_anbieter) {   //  open window to get more information about anbieter
                 a_anbieter anbieter1 = param as a_anbieter;
-                AnbieterView v1 = new AnbieterView();
-                v1.DataContext = anbieter1;
-                v1.ShowDialog();
+                SortimentView sv = new SortimentView();
+                sv.DataContext=anbieter1;
+                sv.Show();
             }
 
-            if (param is h_haendler) {   //  edit existing  stunde
-                h_haendler haendler1 = param as h_haendler;
-                HaendlerView v1 = new HaendlerView();
-                v1.DataContext = haendler1;
-                v1.ShowDialog();
-                }
+            if(param is h_haendler) {
+                try {
+                    System.Diagnostics.Process.Start("http://www."+(param as h_haendler).h_haendlerwebseite);
 
+                } catch(System.ComponentModel.Win32Exception noBrowser) {
+                    if(noBrowser.ErrorCode==-2147467259) {
+                        MessageBox.Show(noBrowser.Message);
+                    }
+                } catch(System.Exception other) {
+                    MessageBox.Show(other.Message);
+                }
             }
         }
     }
-
+}
 
