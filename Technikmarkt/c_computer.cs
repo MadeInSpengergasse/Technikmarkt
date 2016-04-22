@@ -15,7 +15,7 @@ namespace Technikmarkt
     public partial class c_computer
     {
         public string c_prozessor { get; set; }
-        public string c_graphikkarte { get; set; }
+        public string c_grafikkarte { get; set; }
         public decimal c_p_gtin { get; set; }
     
         public virtual p_produkt p_produkt { get; set; }

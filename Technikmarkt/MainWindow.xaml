@@ -3,100 +3,138 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:Technikmarkt"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:self="clr-namespace:Technikmarkt"
         mc:Ignorable="d"
-        Title="Technikmarkt v1.0 - Anbieter/Händler Übersicht" Height="450" Width="700" MinHeight="250" MinWidth="470">
+        Title="Technikmarkt v1.0 - Anbieter/Händler Übersicht" Height="470" Width="700" MinHeight="290" MinWidth="530">
     <Window.Resources>
+        <!-- Needed for setting the transparency of the hint text in the searchbox -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <!-- Sets the margin for all children of GridLayout -->
+        <Style TargetType="self:GridLayout">
+            <Setter Property="ChildMargin" Value="6">
+            </Setter>
+        </Style>
     </Window.Resources>
+    <!--<Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="FontFamily" Value="pack://application:,,,/res/#Roboto"/>
+        </Style>
+    </Window.Style>-->
 
-    <Grid Background="DarkGray">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Grid x:Name="main_grid" Background="#FAFAFA">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="LightGray">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" BorderBrush="#455a64" BorderThickness="10">
+            <Border.Effect>
+                <DropShadowEffect Color="#263238" BlurRadius="6" ShadowDepth="0"/>
+            </Border.Effect>
 
-            <fa:ImageAwesome Grid.Column="0" x:Name="home" Icon="Home" Foreground="Gray" Visibility="Visible" VerticalAlignment="Center" Height="20" Width="20" Margin="6 0 6 0"/>
-            <Button Grid.Column="0" x:Name="back" Click="back_button_click" Visibility="Hidden" VerticalAlignment="Center" Height="18" Width="18" Margin="6 0 6 0">
-                <Button.Template>
-                    <ControlTemplate>
-                        <fa:ImageAwesome Icon="ChevronCircleLeft" Foreground="Gray"/>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Grid Grid.Column="1" Background="White" Margin="0 7 3 5" FocusManager.FocusedElement="{Binding ElementName=suchfeld}">
-                <TextBlock VerticalAlignment="Center" Margin="4 0 0 0" Text="Anbieter- oder Händlername..." Foreground="Gray" 
+            <self:GridLayout Background="#455a64">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <fa:ImageAwesome Grid.Column="0" x:Name="home" Icon="Home" Foreground="White" Visibility="Visible" Height="20" Width="20"/>
+                <Button Grid.Column="0" x:Name="back" Click="back_button_click" Visibility="Hidden" Height="18" Width="18">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <fa:ImageAwesome Icon="ChevronCircleLeft" Foreground="White"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Border Grid.Column="1" CornerRadius="3" Padding="2" Background="White"
+                        BorderBrush="White" BorderThickness="1" >
+                    <Grid Background="White" FocusManager.FocusedElement="{Binding ElementName=suchfeld}">
+                        <TextBlock Margin="4 0 0 0"  VerticalAlignment="Center" Text="Anbieter- oder Händlername..." Foreground="Gray" 
                        Visibility="{Binding ElementName=suchfeld, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <TextBox x:Name="suchfeld" Background="Transparent"/>
-            </Grid>
-            <Button Grid.Column="2" x:Name="suchfeld_button" IsDefault="true" Click="suchfeld_button_click" Content="Suchen" Margin="0 7 6 5"/>
-        </Grid>
+                        <TextBox BorderThickness="0" x:Name="suchfeld" Background="Transparent"/>
+                    </Grid>
+                </Border>
 
-        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Fill="DarkGray" Height="2"/>
-
-        <Grid Grid.Row="2" DataContext="{Binding Source={StaticResource vm}}" Background="LightGray">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Text="Anbieter" TextAlignment="Left" FontSize="24" Margin="6 0 3 0" Grid.Column="0" Grid.Row="0"/>
-            <Grid Grid.Column="0" Grid.Row="1">
-
-                <ListBox x:Name="Listbox_anbieter" Margin="6 0 3 0" 
-                 ItemsSource="{Binding AlleAnbieter}"
-                 DisplayMemberPath="a_anbietername"
-                 SelectedValuePath="a_anbietername">
-
-                    <ListBox.SelectedValue>
-                        <Binding Path="GewaelterAnbieter"
-                         Mode="OneWayToSource"
-                         BindsDirectlyToSource="True" />
-                    </ListBox.SelectedValue>
-                </ListBox>
-                <fa:ImageAwesome x:Name="spinner" Icon="Cog" Spin="True" SpinDuration="2" Visibility="Hidden" Foreground="DarkGray" Height="36" Width="36" />
-            </Grid>
+                <Button Grid.Column="2" x:Name="suchfeld_button" IsDefault="true" Click="suchfeld_button_click" Height="18" Width="18">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <fa:ImageAwesome Icon="Search" Foreground="White"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </self:GridLayout>
+        </Border>
 
 
-            <TextBlock Text="Händler"  TextAlignment="Left" FontSize="24" Margin="3 0 6 0" Grid.Column="1" Grid.Row="0"/>
-            <Grid Grid.Column="1" Grid.Row="1">
-                
-                <ListBox x:Name="Listbox_haendler" Margin="3 0 6 0"
-                ItemsSource="{Binding AlleHaendler}" 
-                DisplayMemberPath="h_haendlername"
-                 SelectedValuePath="h_haendlername">
-                    <ListBox.SelectedValue>
-                        <Binding Path="GewaelterHaendler"
-                         Mode="OneWayToSource"
-                         BindsDirectlyToSource="True" />
-                    </ListBox.SelectedValue>
-                </ListBox>
-                <fa:ImageAwesome x:Name="spinner2" Icon="Cog" Spin="True" SpinDuration="2" Visibility="Hidden" Foreground="DarkGray" Height="36" Width="36" />
-            </Grid>
+        <TextBlock Grid.Row="2" Text="Die unten gelisteten Einträge sind auf 40 beschränkt.&#10;Bitte verwenden Sie die Suchfunktion um mehr Anbieter bzw. Händler zu finden." Foreground="Black" Opacity=".54" TextWrapping="Wrap" TextAlignment="Center" FontSize="14" Padding="0 10 0 8"/>
 
-            <Button x:Name="anbieter_infosortiment_button" Content="Anbieter Information u. Sortiment" Grid.Column="0" Grid.Row="2" Margin="6 5 3 5"
-                Command="{Binding SaveInsertCommand}" 
-                CommandParameter="{Binding ElementName=Listbox_anbieter, Path=SelectedItem}"/>
-            <Button x:Name="haendler_information_button" Content="Öffne Händler Website" Grid.Column="1" Grid.Row="2" Margin="3 5 6 5"
-                Command="{Binding SaveInsertCommand}" 
-                CommandParameter="{Binding ElementName=Listbox_haendler, Path=SelectedItem}"/>
-        </Grid>
+        <Rectangle Grid.Row="3" HorizontalAlignment="Stretch" Opacity=".12" Fill="Black" Height="2" Margin="0 0 0 3"/>
+
+        <Border Grid.Row="4" BorderBrush="{Binding Path=Background, ElementName=main_grid}" BorderThickness="8" >
+            <self:GridLayout DataContext="{Binding Source={StaticResource vm}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Anbieter" Foreground="Black" Opacity=".87" TextAlignment="Left" FontSize="24" Grid.Column="0" Grid.Row="0"/>
+                <Grid Grid.Column="0" Grid.Row="1">
+
+                    <Border Grid.Column="1" CornerRadius="2" Padding="2" Background="LightGray"
+                        BorderBrush="White" BorderThickness="1" >
+                        <ListBox BorderThickness="0" x:Name="Listbox_anbieter"
+                            ItemsSource="{Binding AlleAnbieter}"
+                            DisplayMemberPath="a_anbietername"
+                            SelectedValuePath="a_anbietername">
+
+                            <ListBox.SelectedValue>
+                                <Binding Path="GewaelterAnbieter"
+                                    Mode="OneWayToSource"
+                                    BindsDirectlyToSource="True" />
+                            </ListBox.SelectedValue>
+                        </ListBox>
+                    </Border>
+                    <fa:ImageAwesome x:Name="spinner" Icon="Cog" Spin="True" SpinDuration="2" Visibility="Hidden" Foreground="DarkGray" Height="36" Width="36" />
+                </Grid>
+
+                <TextBlock Text="Händler" Foreground="Black" Opacity=".87" TextAlignment="Left" FontSize="24" Grid.Column="1" Grid.Row="0"/>
+                <Grid Grid.Column="1" Grid.Row="1">
+
+                    <Border Grid.Column="1" CornerRadius="2" Padding="2" Background="LightGray"
+                        BorderBrush="White" BorderThickness="1" >
+                        <ListBox BorderThickness="0" x:Name="Listbox_haendler"
+                                ItemsSource="{Binding AlleHaendler}" 
+                                DisplayMemberPath="h_haendlername"
+                                SelectedValuePath="h_haendlername">
+                            <ListBox.SelectedValue>
+                                <Binding Path="GewaelterHaendler"
+                                    Mode="OneWayToSource"
+                                    BindsDirectlyToSource="True" />
+                            </ListBox.SelectedValue>
+                        </ListBox>
+                    </Border>
+                    <fa:ImageAwesome x:Name="spinner2" Icon="Cog" Spin="True" SpinDuration="2" Visibility="Hidden" Foreground="DarkGray" Height="36" Width="36" />
+                </Grid>
+
+                <Button x:Name="anbieter_infosortiment_button" Content="Anbieter Information u. Sortiment" Grid.Column="0" Grid.Row="2"
+                        Command="{Binding SaveInsertCommand}" 
+                        CommandParameter="{Binding ElementName=Listbox_anbieter, Path=SelectedItem}"/>
+                <Button x:Name="haendler_information_button" Content="Öffne Händler Website" Grid.Column="1" Grid.Row="2"
+                        Command="{Binding SaveInsertCommand}" 
+                        CommandParameter="{Binding ElementName=Listbox_haendler, Path=SelectedItem}"/>
+            </self:GridLayout>
+        </Border>
     </Grid>
 </Window>

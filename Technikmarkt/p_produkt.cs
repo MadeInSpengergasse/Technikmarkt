@@ -23,8 +23,8 @@ namespace Technikmarkt
         public decimal p_gtin { get; set; }
         public string p_name { get; set; }
         public string p_a_anbietername { get; set; }
-        public Nullable<decimal> p_speicherkapazitaetgb { get; set; }
-        public Nullable<int> p_preis { get; set; }
+        public decimal p_speicherkapazitaetgb { get; set; }
+        public decimal p_preis { get; set; }
     
         public virtual a_anbieter a_anbieter { get; set; }
         public virtual c_computer c_computer { get; set; }
