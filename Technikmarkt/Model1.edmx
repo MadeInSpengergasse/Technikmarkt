@@ -9,23 +9,23 @@
           <Key>
             <PropertyRef Name="a_anbietername" />
           </Key>
-          <Property Name="a_anbietername" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="a_anbieterwebseite" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="a_anbietername" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="a_anbieterwebseite" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="an_anbieterfiliale">
           <Key>
             <PropertyRef Name="an_a_anbietername" />
             <PropertyRef Name="a_v_adresse" />
           </Key>
-          <Property Name="an_a_anbietername" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="a_v_adresse" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="an_a_anbietername" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="a_v_adresse" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="c_computer">
           <Key>
             <PropertyRef Name="c_p_gtin" />
           </Key>
-          <Property Name="c_prozessor" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="c_graphikkarte" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="c_prozessor" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="c_grafikkarte" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="c_p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="g_geschaeft">
@@ -33,15 +33,15 @@
             <PropertyRef Name="g_v_adresse" />
             <PropertyRef Name="g_h_haendlername" />
           </Key>
-          <Property Name="g_v_adresse" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="g_h_haendlername" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="g_v_adresse" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="g_h_haendlername" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="h_haendler">
           <Key>
             <PropertyRef Name="h_haendlername" />
           </Key>
-          <Property Name="h_haendlername" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="h_haendlerwebseite" Type="varchar" MaxLength="200" />
+          <Property Name="h_haendlername" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="h_haendlerwebseite" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="hp_haendlerkauftprodukt">
           <Key>
@@ -49,9 +49,9 @@
             <PropertyRef Name="hp_p_gtin" />
             <PropertyRef Name="hp_p_anbietername" />
           </Key>
-          <Property Name="hp_h_haendlername" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="hp_h_haendlername" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="hp_p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
-          <Property Name="hp_p_anbietername" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="hp_p_anbietername" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="l_laufwerk">
           <Key>
@@ -65,31 +65,31 @@
             <PropertyRef Name="p_gtin" />
           </Key>
           <Property Name="p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
-          <Property Name="p_name" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="p_a_anbietername" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="p_speicherkapazitaetgb" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="p_preis" Type="int" />
+          <Property Name="p_name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="p_a_anbietername" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="p_speicherkapazitaetgb" Type="decimal" Precision="7" Scale="3" Nullable="false" />
+          <Property Name="p_preis" Type="decimal" Precision="6" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="s_smartphone">
           <Key>
             <PropertyRef Name="s_p_gtin" />
           </Key>
-          <Property Name="s_farbe" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="s_farbe" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="s_p_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="v_verkaufsraum">
           <Key>
             <PropertyRef Name="v_adresse" />
           </Key>
-          <Property Name="v_adresse" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="v_adresse" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="ve_verkauftan">
           <Key>
             <PropertyRef Name="ve_gtin" />
           </Key>
           <Property Name="ve_gtin" Type="decimal" Precision="13" Scale="0" Nullable="false" />
-          <Property Name="ve_h_haendlervon" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="ve_h_haendleran" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="ve_h_haendlervon" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ve_h_haendleran" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="fk_an_anbieterfiliale_a_anbieter1">
           <End Role="a_anbieter" Type="Self.a_anbieter" Multiplicity="1" />
@@ -116,7 +116,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_c_computer_p_produkt1">
-          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="c_computer" Type="Self.c_computer" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="p_produkt">
@@ -176,7 +178,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_l_laufwerk_p_produkt1">
-          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="l_laufwerk" Type="Self.l_laufwerk" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="p_produkt">
@@ -200,7 +204,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_s_smartphone_p_produkt1">
-          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="s_smartphone" Type="Self.s_smartphone" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="p_produkt">
@@ -305,8 +311,8 @@
           <Key>
             <PropertyRef Name="a_anbietername" />
           </Key>
-          <Property Name="a_anbietername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="a_anbieterwebseite" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="a_anbietername" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="a_anbieterwebseite" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="p_produkt" Relationship="Self.fk_p_produkt_a_anbieter1" FromRole="a_anbieter" ToRole="p_produkt" />
           <NavigationProperty Name="v_verkaufsraum" Relationship="Self.an_anbieterfiliale" FromRole="a_anbieter" ToRole="v_verkaufsraum" />
         </EntityType>
@@ -314,8 +320,8 @@
           <Key>
             <PropertyRef Name="c_p_gtin" />
           </Key>
-          <Property Name="c_prozessor" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="c_graphikkarte" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="c_prozessor" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="c_grafikkarte" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="c_p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
           <NavigationProperty Name="p_produkt" Relationship="Self.fk_c_computer_p_produkt1" FromRole="c_computer" ToRole="p_produkt" />
         </EntityType>
@@ -323,8 +329,8 @@
           <Key>
             <PropertyRef Name="h_haendlername" />
           </Key>
-          <Property Name="h_haendlername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="h_haendlerwebseite" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="h_haendlername" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="h_haendlerwebseite" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="hp_haendlerkauftprodukt" Relationship="Self.fk_h_haendler_has_p_produkt_h_haendler1" FromRole="h_haendler" ToRole="hp_haendlerkauftprodukt" />
           <NavigationProperty Name="ve_verkauftan" Relationship="Self.fk_ve_verkauftan_h_haendler1" FromRole="h_haendler" ToRole="ve_verkauftan" />
           <NavigationProperty Name="ve_verkauftan1" Relationship="Self.fk_ve_verkauftan_h_haendler2" FromRole="h_haendler" ToRole="ve_verkauftan" />
@@ -336,9 +342,9 @@
             <PropertyRef Name="hp_p_gtin" />
             <PropertyRef Name="hp_p_anbietername" />
           </Key>
-          <Property Name="hp_h_haendlername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hp_h_haendlername" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="hp_p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
-          <Property Name="hp_p_anbietername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hp_p_anbietername" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="h_haendler" Relationship="Self.fk_h_haendler_has_p_produkt_h_haendler1" FromRole="hp_haendlerkauftprodukt" ToRole="h_haendler" />
           <NavigationProperty Name="p_produkt" Relationship="Self.fk_h_haendler_has_p_produkt_p_produkt1" FromRole="hp_haendlerkauftprodukt" ToRole="p_produkt" />
         </EntityType>
@@ -355,10 +361,10 @@
             <PropertyRef Name="p_gtin" />
           </Key>
           <Property Name="p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
-          <Property Name="p_name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="p_a_anbietername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="p_speicherkapazitaetgb" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="p_preis" Type="Int32" />
+          <Property Name="p_name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="p_a_anbietername" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="p_speicherkapazitaetgb" Type="Decimal" Precision="7" Scale="3" Nullable="false" />
+          <Property Name="p_preis" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
           <NavigationProperty Name="a_anbieter" Relationship="Self.fk_p_produkt_a_anbieter1" FromRole="p_produkt" ToRole="a_anbieter" />
           <NavigationProperty Name="c_computer" Relationship="Self.fk_c_computer_p_produkt1" FromRole="p_produkt" ToRole="c_computer" />
           <NavigationProperty Name="hp_haendlerkauftprodukt" Relationship="Self.fk_h_haendler_has_p_produkt_p_produkt1" FromRole="p_produkt" ToRole="hp_haendlerkauftprodukt" />
@@ -369,7 +375,7 @@
           <Key>
             <PropertyRef Name="s_p_gtin" />
           </Key>
-          <Property Name="s_farbe" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="s_farbe" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="s_p_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
           <NavigationProperty Name="p_produkt" Relationship="Self.fk_s_smartphone_p_produkt1" FromRole="s_smartphone" ToRole="p_produkt" />
         </EntityType>
@@ -377,7 +383,7 @@
           <Key>
             <PropertyRef Name="v_adresse" />
           </Key>
-          <Property Name="v_adresse" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="v_adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="a_anbieter" Relationship="Self.an_anbieterfiliale" FromRole="v_verkaufsraum" ToRole="a_anbieter" />
           <NavigationProperty Name="h_haendler" Relationship="Self.g_geschaeft" FromRole="v_verkaufsraum" ToRole="h_haendler" />
         </EntityType>
@@ -386,8 +392,8 @@
             <PropertyRef Name="ve_gtin" />
           </Key>
           <Property Name="ve_gtin" Type="Decimal" Precision="13" Scale="0" Nullable="false" />
-          <Property Name="ve_h_haendlervon" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ve_h_haendleran" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ve_h_haendlervon" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ve_h_haendleran" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="h_haendler" Relationship="Self.fk_ve_verkauftan_h_haendler1" FromRole="ve_verkauftan" ToRole="h_haendler" />
           <NavigationProperty Name="h_haendler1" Relationship="Self.fk_ve_verkauftan_h_haendler2" FromRole="ve_verkauftan" ToRole="h_haendler" />
         </EntityType>
@@ -404,7 +410,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_c_computer_p_produkt1">
-          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="c_computer" Type="Self.c_computer" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="p_produkt">
@@ -464,7 +472,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_l_laufwerk_p_produkt1">
-          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="l_laufwerk" Type="Self.l_laufwerk" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="p_produkt">
@@ -476,7 +486,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_s_smartphone_p_produkt1">
-          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1" />
+          <End Role="p_produkt" Type="Self.p_produkt" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="s_smartphone" Type="Self.s_smartphone" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="p_produkt">
@@ -564,7 +576,7 @@
             <EntityTypeMapping TypeName="TechnikmarktModel.c_computer">
               <MappingFragment StoreEntitySet="c_computer">
                 <ScalarProperty Name="c_prozessor" ColumnName="c_prozessor" />
-                <ScalarProperty Name="c_graphikkarte" ColumnName="c_graphikkarte" />
+                <ScalarProperty Name="c_grafikkarte" ColumnName="c_grafikkarte" />
                 <ScalarProperty Name="c_p_gtin" ColumnName="c_p_gtin" />
               </MappingFragment>
             </EntityTypeMapping>

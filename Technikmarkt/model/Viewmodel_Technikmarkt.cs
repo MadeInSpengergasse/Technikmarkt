@@ -92,10 +92,10 @@ namespace Technikmarkt.model {
         }
 
         public bool SaveCanExecute(object param) {
-            if(param==null)
+            if(param==null) {
                 return false;
-            else
-                return true;
+            }
+            return true;
         }
 
         public void SaveExecuted(object param) {

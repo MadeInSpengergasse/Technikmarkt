@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Background="LightGray" Grid.Row="0">
-            <TextBlock Text="{Binding a_anbietername}" HorizontalAlignment="Center" Margin="0 2 0 0" FontSize="20"/>
+            <TextBlock x:Name="header_anbietername" Text="{Binding a_anbietername}" HorizontalAlignment="Center" Margin="0 2 0 0" FontSize="20"/>
             <TextBlock Text="{Binding a_anbieterwebseite}" HorizontalAlignment="Center" Margin="0 0 0 4" FontSize="18"/>
             <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Fill="DarkGray" Height="2"/>
         </StackPanel>
@@ -40,16 +40,16 @@
             </ListBox>
 
             <StackPanel Grid.Column="1" Grid.Row="1" DataContext="{Binding ElementName=listbox_produkte, Path=SelectedItem}" Margin="6 0 0 0">
-                <TextBlock Text="Produkt GTIN" />
+                <TextBlock Text="Produkt GTIN"/>
                 <TextBox Text="{Binding p_gtin}" MaxLength="13"/>
-                <TextBlock Text="Produktname" />
-                <TextBox Text="{Binding p_name}" />
-                <TextBlock Text="Anbietername" />
-                <TextBlock Text="{Binding p_a_anbietername}" x:Name="produkt_anbieter"/>
-                <TextBlock Text="Speicherkapazität in GB" />
-                <TextBox Text="{Binding p_speicherkapazitaetgb}" />
-                <TextBlock Text="Preis in €" />
-                <TextBox Text="{Binding p_preis}" />
+                <TextBlock Text="Produktname"/>
+                <TextBox Text="{Binding p_name}" MaxLength="40"/>
+                <TextBlock Text="Anbietername"/>
+                <TextBlock x:Name="produkt_anbieter" Text="{Binding Path=Text, ElementName=header_anbietername}" Foreground="Gray"/>
+                <TextBlock Text="Speicherkapazität in GB"/>
+                <TextBox Text="{Binding p_speicherkapazitaetgb}" MaxLength="8"/>
+                <TextBlock Text="Preis in €"/>
+                <TextBox Text="{Binding p_preis}" MaxLength="7"/>
 
                 <Button x:Name="neues_produkt_button" Content="Neues Produkt" Click="neu_Click" HorizontalAlignment="Center" Margin="0 10 0 2" Width="120"
                      IsEnabled="{Binding ElementName=listbox_produkte, Path=SelectedItems.Count}"/>
