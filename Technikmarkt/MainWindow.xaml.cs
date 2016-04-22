@@ -34,6 +34,10 @@ namespace Technikmarkt {
         public MainWindow() {
             InitializeComponent();
 
+            /*FrameworkElement.StyleProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata {
+                DefaultValue=FindResource(typeof(Window))
+            });*/
+
             lB_anbieter_IS_orig = (IEnumerable<a_anbieter>) Listbox_anbieter.ItemsSource;
             lB_haendler_IS_orig = (IEnumerable<h_haendler>) Listbox_haendler.ItemsSource;
         }
