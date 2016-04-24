@@ -103,7 +103,7 @@ namespace Technikmarkt.model {
                 a_anbieter anbieter1 = param as a_anbieter;
                 SortimentView sv = new SortimentView();
                 sv.DataContext=anbieter1;
-                sv.Show();
+                sv.ShowDialog();
             }
 
             if(param is h_haendler) {
