@@ -5,19 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technikmarkt"
         xmlns:model="clr-namespace:Technikmarkt.model"
+        
         mc:Ignorable="d"
         Title="Technikmarkt v1.0 - Anbieter Information u. Sortiment" Height="400" Width="600" MinHeight="380" MinWidth="300" Loaded="Window_Loaded">
 
-    <Grid Background="LightGray">
+    <Grid Background="#FAFAFA">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <TextBlock x:Name="header_anbietername" Text="{Binding a_anbietername}" HorizontalAlignment="Center" Margin="0 2 0 0" FontSize="20"/>
-            <TextBlock Text="{Binding a_anbieterwebseite}" HorizontalAlignment="Center" Margin="0 0 0 4" FontSize="18"/>
-            <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Fill="DarkGray" Height="2"/>
+            <TextBlock x:Name="header_anbietername" Text="{Binding a_anbietername}" HorizontalAlignment="Center" Margin="0 2 0 0" Foreground="Black" Opacity=".87" FontSize="20"/>
+            <TextBlock Text="{Binding a_anbieterwebseite}" HorizontalAlignment="Center" Margin="0 0 0 4" Foreground="Black" Opacity=".54" FontSize="18"/>
+            <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Fill="Black" Opacity=".12" Height="2"/>
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="6 5">
@@ -31,15 +32,63 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Produkte" Grid.Column="0" Grid.Row="0" FontSize="18" Margin="0 0 0 2"/>
+            <Grid Grid.Column="0" Grid.Row="0" Margin="0 0 0 2">
+                <TextBlock Text="Produkte" FontSize="18" />
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Click="new_item_click" Margin="0 0 12 0">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Viewbox>
+                                    <Canvas Width="18" Height="18" Background="Transparent">
+                                        <Path Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 
+                                              20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 
+                                              0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" 
+                                              Fill="Gray" Canvas.Left="-3" Canvas.Top="-3"/>
+                                    </Canvas>
+                                </Viewbox>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Click="save_all_changes_click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Viewbox>
+                                    <Canvas Width="18" Height="18" Background="Transparent">
+                                        <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 
+                                              0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 
+                                              5,21H19A2,2 0 0,0 21,19V7L17,3Z" 
+                                              Fill="Gray" Canvas.Left="-3" Canvas.Top="-3"/>
+                                    </Canvas>
+                                </Viewbox>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>
 
-            <ListBox x:Name="listbox_produkte"  Grid.Column="0" Grid.Row="1"
-                 ItemsSource="{Binding p_produkt}" 
-                 DisplayMemberPath="p_name"
-                 SelectedValuePath="p_gtin" >
-            </ListBox>
+            <Border Grid.Column="0" Grid.Row="1" CornerRadius="2" Padding="2" Background="#bdbdbd"
+                        BorderThickness="1" >
+                <ListBox x:Name="listbox_produkte" BorderThickness="0"
+                    ItemsSource="{Binding p_produkt}" 
+                    DisplayMemberPath="p_name"
+                    SelectedValuePath="p_gtin" >
+                </ListBox>
+            </Border>
 
             <StackPanel Grid.Column="1" Grid.Row="1" DataContext="{Binding ElementName=listbox_produkte, Path=SelectedItem}" Margin="6 0 0 0">
+                <Button Click="delete_current_item_click" Height="18" Width="18" HorizontalAlignment="Right" IsEnabled="{Binding ElementName=listbox_produkte, Path=SelectedItems.Count}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Viewbox>
+                                <Canvas Width="18" Height="18">
+                                    <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 
+                                                0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" 
+                                          Fill="Gray" Canvas.Left="-3" Canvas.Top="-3"/>
+                                </Canvas>
+                            </Viewbox>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
                 <TextBlock Text="Produkt GTIN"/>
                 <TextBox Text="{Binding p_gtin}" MaxLength="13"/>
                 <TextBlock Text="Produktname"/>
@@ -51,16 +100,7 @@
                 <TextBlock Text="Preis in €"/>
                 <TextBox Text="{Binding p_preis}" MaxLength="7"/>
 
-                <Button x:Name="neues_produkt_button" Content="Neues Produkt" Click="neu_Click" HorizontalAlignment="Center" Margin="0 10 0 2" Width="120"
-                     IsEnabled="{Binding ElementName=listbox_produkte, Path=SelectedItems.Count}"/>
-
-                <Button x:Name="speicher_produkt_button" Content="Produkt speichern" Click="speichern_Click" HorizontalAlignment="Center" Margin="0 2 0 2" Width="120"
-                    IsEnabled="{Binding ElementName=listbox_produkte, Path=SelectedItems.Count}"/>
-
-                <Button x:Name="loesch_produkt_button" Content="Produkt löschen" Click="loesch_Click" HorizontalAlignment="Center" Margin="0 2 0 0" Width="120"
-                     IsEnabled="{Binding ElementName=listbox_produkte, Path=SelectedItems.Count}"/>
-
-                <TextBlock x:Name="fehler" Foreground="Red" TextWrapping="Wrap" />
+                <TextBlock x:Name="fehler" Foreground="Red" TextWrapping="Wrap" Margin="0 10 0 0"/>
             </StackPanel>
         </Grid>
     </Grid>
