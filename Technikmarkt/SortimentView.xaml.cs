@@ -26,65 +26,61 @@ namespace Technikmarkt {
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            //liklassen.ItemsSource = (from k in  db.klassens
-            //                         select k).ToList();
-
             var erg = db.p_produkt.Where(c => c.p_a_anbietername == ((a_anbieter)DataContext).a_anbietername);
-            erg.Load();                         // Variante wo man Klassen auch editieren könnte
-            listbox_produkte.ItemsSource=erg.ToList();  // local ist Observable stellt die vorher mit Load geladenen Daten dar
+            erg.Load();
+            listbox_produkte.ItemsSource=erg.ToList(); 
         }
 
-        private void speichern_Click(object sender, RoutedEventArgs e) {
+        private void save_all_changes_click(object sender, RoutedEventArgs e) {
             fehler.Text="";
 
-            try {
-                var p1 = (p_produkt) listbox_produkte.SelectedItem;
-                if(p1.p_gtin>=1000000000000) {
+            int changes = 0;
 
-                    int anzzeilen = db.SaveChanges();
-                    fehler.Text=anzzeilen+" Datensatz geändert.";
-                } else {
-                    fehler.Text="GTIN must have 13 digits!";
-                }
-            } catch(Exception e1) {
-                fehler.Text=e1.Message;   // zeige alle Inner Exceptins
-                for(var ex = e1.InnerException; ex!=null; ex=ex.InnerException)
-                    fehler.Text=fehler.Text+" / "+ex.Message;
+            try {
+                    changes = db.SaveChanges();
+            } catch(Exception e1) {}
+
+            if(changes==1) {
+                fehler.Text="1 Datensatz in der Datenbank wurde geändert.";
+            } else {
+                fehler.Text=changes+" Datensätze in der Datenbank wurden geändert.";
             }
         }
 
-        private void neu_Click(object sender, RoutedEventArgs e) {
+        private void new_item_click(object sender, RoutedEventArgs e) {
+            fehler.Text="";
+
             var p1 = new p_produkt();
             p1.p_name="Demo Name";
-            //emin was 420 blazed
-            //p1.p_a_anbietername = (((sender as Button).Parent as StackPanel).Children[5] as TextBlock).Text == null ? "" : (((sender as Button).Parent as StackPanel).Children[5] as TextBlock).Text;
+            
             p1.p_a_anbietername=produkt_anbieter.Text;
             db.p_produkt.Add(p1);
 
-            ((List<p_produkt>) listbox_produkte.ItemsSource).Add(p1);  // setze die Klasse durch zuweisen zum nav. Property
+            ((List<p_produkt>) listbox_produkte.ItemsSource).Add(p1);
 
             listbox_produkte.Items.Refresh();
         }
 
-        private void loesch_Click(object sender, RoutedEventArgs e) {
+        private void delete_current_item_click(object sender, RoutedEventArgs e) {
+            fehler.Text="";
+
             if(listbox_produkte.SelectedItem!=null) {
                 var p1 = (p_produkt) listbox_produkte.SelectedItem;
 
-                //((klassen)liklassen.SelectedItem).schuelers.Remove(sl);
+                int changes=0;
 
                 try {
-                    var entry = db.Entry(p1);
-                    if(entry.State==EntityState.Detached)
-                        db.p_produkt.Attach(p1);
                     db.p_produkt.Remove(p1);
 
-                    int anzzeilen = db.SaveChanges();
-                    fehler.Text=anzzeilen+" Datensatz gelöscht!";
+                    changes = db.SaveChanges();
+                } catch(Exception e1) {}
 
-                } catch(Exception e1) {
-                    fehler.Text=e1.Message;   // zeige alle Inner Exceptins
-                    for(var ex = e1.InnerException; ex!=null; ex=ex.InnerException)
-                        fehler.Text=fehler.Text+" / "+ex.Message;
+                if(changes==0) {
+                    fehler.Text="1 lokaler Datensatz wurde gelöscht.";
+                } else if(changes==1) {
+                    fehler.Text="1 Datensatz in der Datenbank wurde gelöscht.";
+                } else {
+                    fehler.Text=changes+" Datensätze in der Datenbank wurden gelöscht.";
                 }
 
                 ((List<p_produkt>) listbox_produkte.ItemsSource).Remove(p1);
