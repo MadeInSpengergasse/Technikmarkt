@@ -9,9 +9,7 @@ using System.Windows.Input;
 using Technikmarkt.model;
 
 namespace Technikmarkt.model {
-    public class Viewmodel_Technikmarkt : INotifyPropertyChanged {
-
-        public event PropertyChangedEventHandler PropertyChanged;
+    public class Viewmodel_Technikmarkt {
 
         TechnikmarktEntities db = new TechnikmarktEntities();
 
@@ -32,61 +30,13 @@ namespace Technikmarkt.model {
                         select h).Take(40).ToList();
             }
         }
-        string gewaelterAnbieter;
-        public string GewaelterAnbieter {
-            get { return gewaelterAnbieter; }
-            set {
-                gewaelterAnbieter=value;
-                Console.Write(gewaelterAnbieter);
-                //PropertyChanged(this,new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
-            }
-        }
-
-        string gewaehlterHaendler;
-        public string GewaehlterHaendler {
-            get { return gewaehlterHaendler; }
-            set {
-                gewaehlterHaendler=value;
-                Console.Write(gewaelterAnbieter);
-                //PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
-            }
-        }
-
-        string gewaehltesProdukt;
-        public string GewaehltesProdukt {
-            get { return gewaehltesProdukt; }
-            set {
-                gewaehltesProdukt=value;
-                Console.Write(gewaehltesProdukt);
-                PropertyChanged(this, new PropertyChangedEventArgs("ProduktegewählterAnbieter"));//string noch hinzufügen
-            }
-        }
-
-        public IEnumerable<a_anbieter> selectedAnbieter {
-            get {
-                return (from a in db.a_anbieter
-                        where a.a_anbietername.Equals(gewaelterAnbieter)
-                        select a).ToList();
-            }
-        }
-
-        public IEnumerable<p_produkt> ProduktegewählterAnbieter {
-            get {
-                return (from p in db.p_produkt
-                        where p.a_anbieter.a_anbietername.Equals(gewaelterAnbieter)
-                        select p).ToList();
-            }
-        }
-
-
 
         ICommand saveinsertstundeCommand;
         public ICommand SaveInsertCommand {
             get {
-                if(saveinsertstundeCommand==null)
-                    saveinsertstundeCommand=
-                        new DelegateCommand(SaveExecuted,
-                                            SaveCanExecute);
+                if(saveinsertstundeCommand==null) {
+                    saveinsertstundeCommand = new DelegateCommand(SaveExecuted, SaveCanExecute);
+                }
                 return saveinsertstundeCommand;
             }
         }
@@ -99,7 +49,7 @@ namespace Technikmarkt.model {
         }
 
         public void SaveExecuted(object param) {
-            if(param is a_anbieter) {   //  open window to get more information about anbieter
+            if(param is a_anbieter) {
                 a_anbieter anbieter1 = param as a_anbieter;
                 SortimentView sv = new SortimentView();
                 sv.DataContext=anbieter1;

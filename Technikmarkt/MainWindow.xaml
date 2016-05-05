@@ -8,6 +8,7 @@
         xmlns:self="clr-namespace:Technikmarkt"
         mc:Ignorable="d"
         Title="Technikmarkt v1.0 - Anbieter/Händler Übersicht" Height="470" Width="700" MinHeight="290" MinWidth="530">
+    <!--FontFamily="./res/#Roboto"-->
     <Window.Resources>
         <!-- Needed for setting the transparency of the hint text in the searchbox -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -61,7 +62,7 @@
 
                 <Viewbox Grid.Column="0" x:Name="home">
                     <Canvas Width="20" Height="20">
-                        <Path Data="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" Fill="{StaticResource ToolbarForeground}" Visibility="Visible" Canvas.Left="-2" Canvas.Top="-2"/>
+                        <Path Data="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" Fill="{StaticResource ToolbarForeground}" Canvas.Left="-2" Canvas.Top="-2"/>
                     </Canvas>
                 </Viewbox>
                 <Button Grid.Column="0" x:Name="back" Click="back_button_click" Visibility="Hidden">
@@ -222,7 +223,8 @@
                         BorderThickness="1" >
                     <Button x:Name="anbieter_infosortiment_button" Content="Anbieter Information u. Sortiment" BorderThickness="0"
                         Command="{Binding SaveInsertCommand}" 
-                        CommandParameter="{Binding ElementName=Listbox_anbieter, Path=SelectedItem}"/>
+                        CommandParameter="{Binding ElementName=Listbox_anbieter, Path=SelectedItem}">
+                    </Button>
                 </Border>
                 <Border Grid.Column="1" Grid.Row="2" CornerRadius="2" Padding="2" Background="{StaticResource ContentAreaElementBorder}"
                         BorderThickness="1" >

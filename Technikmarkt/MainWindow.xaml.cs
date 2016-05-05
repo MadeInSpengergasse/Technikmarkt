@@ -47,14 +47,15 @@ namespace Technikmarkt {
                 toggleNavigation(true);
                 toggleSpinner(true);
 
-                string name = suchfeld.Text.Trim().ToLower();
+                string name = suchfeld.Text.Trim();
                 TaskScheduler ui = TaskScheduler.FromCurrentSynchronizationContext();
 
                 Task.Factory.StartNew(() => {
                     Wrapper ah = new Wrapper();
 
-                    List<a_anbieter> a1 = (from a in db.a_anbieter where a.a_anbietername.ToLower().StartsWith(name) select a).ToList();
-                    List<h_haendler> h1 = (from h in db.h_haendler where h.h_haendlername.ToLower().StartsWith(name) select h).ToList();
+                    // MySQL is case-insensitive
+                    List<a_anbieter> a1 = (from a in db.a_anbieter where a.a_anbietername.StartsWith(name) select a).ToList();
+                    List<h_haendler> h1 = (from h in db.h_haendler where h.h_haendlername.StartsWith(name) select h).ToList();
 
                     ah.Anbieter=a1;
                     ah.Haendler=h1;
